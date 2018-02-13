@@ -1,13 +1,22 @@
-import psmove, pair
-import common, colors, joust, webui
-import yaml
-import time, random, json, os, os.path, sys, glob
-from piaudio import Music, DummyMusic, Audio, InitAudio
-from enum import Enum
+import glob
+import os
+import os.path
+import random
+import time
 from multiprocessing import Process, Value, Array, Queue, Manager
-from games import ffa, zombie, commander, swapper, tournament, speed_bomb, fight_club
-import jm_dbus
 
+import pair
+import psmove
+import yaml
+from enum import Enum
+
+import colors
+import common
+import jm_dbus
+import joust
+import webui
+from games import ffa, zombie, commander, swapper, tournament, speed_bomb, fight_club
+from piaudio import Music, DummyMusic, Audio, InitAudio
 
 TEAM_NUM = len(colors.team_color_list)
 #TEAM_COLORS = colors.generate_colors(TEAM_NUM)
@@ -225,14 +234,15 @@ class Menu():
 
         self.command_queue = Queue()
         self.joust_manager = Manager()
+
         self.ns = self.joust_manager.Namespace()
+        self.ns.status = dict()
+        self.ns.settings = dict()
+        self.ns.battery_status = dict()
 
         self.web_proc = Process(target=webui.start_web, args=(self.command_queue,self.ns))
         self.web_proc.start()
 
-        self.ns.status = dict()
-        self.ns.settings = dict()
-        self.ns.battery_status = dict()
         self.command_from_web = ''
         self.initialize_settings()
         self.update_settings_file()
@@ -335,6 +345,7 @@ class Menu():
             #now start tracking the move controller
             proc = Process(target=track_move, args=(move_serial, move_num, opts, color, self.show_battery, self.dead_count))
             proc.start()
+
             self.move_opts[move_serial] = opts
             self.tracked_moves[move_serial] = proc
             self.force_color[move_serial] = color
@@ -407,18 +418,18 @@ class Menu():
             move_opt[Opts.random_start.value] = Alive.on.value
         self.random_added = []
 
+    def no_playstation_controllers_attached_to_usb(self):
+        return "0" in os.popen('lsusb | grep "PlayStation Move motion controller" | wc -l').read()
+
+    def has_tracked_controllers(self):
+        return len(self.tracked_moves) > 0
+
     def game_loop(self):
-        self.play_menu_music = True
+        self.menu_music_needs_playing = True
         while True:
-            if self.play_menu_music:
-                self.play_menu_music = False
-                try:
-                    self.menu_music = Music(random.choice(glob.glob("audio/MenuMusic/*")))
-                    self.menu_music.start_audio_loop()
-                except Exception:
-                    self.menu_music = DummyMusic()
+            self.play_menu_music()
             self.i=self.i+1
-            if not self.pair_one_move and "0" in os.popen('lsusb | grep "PlayStation Move motion controller" | wc -l').read():
+            if not self.pair_one_move and self.no_playstation_controllers_attached_to_usb():
                 self.pair_one_move = True
                 self.paired_moves = []
             if self.pair_one_move:
@@ -429,24 +440,36 @@ class Menu():
                         elif move.connection_type != psmove.Conn_USB:
                             self.pair_move(move, move_num)
                 self.check_for_new_moves()
-                if len(self.tracked_moves) > 0:
+                if self.has_tracked_controllers():
                     self.check_change_mode()
                     self.check_admin_controls()
                     self.check_start_game()
                 self.check_command_queue()
                 self.update_status('menu')
-            
 
-    def check_admin_controls(self):
+    def play_menu_music(self):
+        if self.menu_music_needs_playing:
+            self.menu_music_needs_playing = False
+            try:
+                self.menu_music = Music(random.choice(glob.glob("audio/MenuMusic/*")))
+                self.menu_music.start_audio_loop()
+            except Exception:
+                self.menu_music = DummyMusic()
+
+    def should_show_battery(self):
         show_bat = False
         for move_opt in self.move_opts.values():
             if move_opt[Opts.selection.value] == Selections.show_battery.value and move_opt[Opts.holding.value] == Holding.holding.value:
                 show_bat = True
         if show_bat:
-            self.show_battery.value = 1
+            return 1
         else:
-            self.show_battery.value = 0
+            return 0
 
+    def check_admin_controls(self):
+        self.show_battery.value = self.should_show_battery()
+
+        # stop controller being admin if the setting says no admins.
         if not self.ns.settings['move_can_be_admin'] and self.admin_move != None:
             self.force_color[self.admin_move][0] = 0
             self.force_color[self.admin_move][1] = 0
@@ -521,7 +544,12 @@ class Menu():
             'sensitivity': Sensitivity.mid.value,
             'play_instructions': True,
             #we store the name, not the enum, so the webui can process it more easily
-            'random_modes': [common.Games.JoustFFA.name,common.Games.JoustRandomTeams.name,common.Games.WereJoust.name,common.Games.Swapper.name],
+            'random_modes': [
+                common.Games.JoustFFA.name,
+                common.Games.JoustRandomTeams.name
+                #common.Games.WereJoust.name,
+                #common.Games.Swapper.name
+                ],
             'play_audio': True,
             'move_can_be_admin': True,
             'enforce_minimum': True,
@@ -552,9 +580,11 @@ class Menu():
             for game in [common.Games.JoustTeams,common.Games.Random]:
                 if game.name in file_settings['random_modes']:
                     file_settings['random_modes'].remove(game.name)
+
             for game in file_settings['random_modes']:
                 if game not in [game.name for game in common.Games]:
                     file_settings['random_modes'].remove(game)
+
             if file_settings['random_modes'] == []:
                 file_settings['random_modes'] = [common.Games.JoustFFA.name]
 
@@ -752,7 +782,7 @@ class Menu():
             if self.ns.settings['play_instructions']:
                 if self.ns.settings['play_audio']:
                     Audio('audio/Menu/tradeoff2.wav').start_effect_and_wait()
-        self.play_menu_music = True
+        self.menu_music_needs_playing = True
         #reset music
         self.choose_new_music()
         #turn off admin mode so someone can't accidentally press a button    

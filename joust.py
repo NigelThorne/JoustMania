@@ -1,15 +1,15 @@
-import common, colors
-import psmove
-import time
-import psutil, os, glob
+import os
 import random
-import numpy
-import json
-from piaudio import Audio
-from enum import Enum
-from multiprocessing import Process, Value, Array, Queue
+import time
 from math import sqrt
+from multiprocessing import Process, Value, Array
 
+import numpy
+import psmove
+
+import colors
+import common
+from piaudio import Audio
 
 # How fast/slow the music can go
 SLOW_MUSIC_SPEED = 0.7

@@ -1,12 +1,15 @@
-from multiprocessing import Queue, Manager, Process
-from time import sleep
-from flask import Flask, render_template, request, redirect, url_for, flash
-from time import sleep
-from wtforms import Form, SelectField, SelectMultipleField, BooleanField, widgets, FieldList
-from os import system
-import common, colors
 import json
+from multiprocessing import Queue, Manager, Process
+from os import system
+from time import sleep
+
 import yaml
+from flask import Flask, render_template, request, redirect, url_for, flash
+from wtforms import Form, SelectField, SelectMultipleField, BooleanField, widgets, FieldList
+
+import colors
+import common
+
 
 class MultiCheckboxField(SelectMultipleField):
     """
