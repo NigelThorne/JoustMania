@@ -53,7 +53,7 @@ class Sensitivity(Enum):
     slow = 0
     mid = 1
     fast = 2
-
+#run as a separate process
 def track_move(serial, move_num, move_opts, force_color, battery, dead_count):
     move = common.get_move(serial, move_num)
     move.set_leds(0,0,0)
@@ -254,17 +254,18 @@ class Menu():
         self.dead_count = Value('i', 0)
         self.moves = [psmove.PSMove(x) for x in range(psmove.count_connected())]
         self.admin_move = None
-        #move controllers that have been taken out of play
-        self.out_moves = {}
+
+        self.out_moves = {} #move controllers that have been taken out of play
         self.random_added = []
         self.rand_game_list = []
 
         self.show_battery = Value('i', 0)
         
-        #only allow one move to be paired at a time
-        self.pair_one_move = True
+
+        self.pair_one_move = True #only allow one move to be paired at a time
         self.tracked_moves = {}
-        self.force_color = {}
+        self.force_color = {} #used to force the color change of a move
+
         self.paired_moves = []
         self.move_opts = {}
         self.teams = {}
@@ -608,7 +609,7 @@ class Menu():
         #option to make file editable by non-root
         #let's leave it as root only, people shouldn't
         #mess with the config file for now
-        #os.system('chmod 666 %s' % com mon.SETTINGSFILE)
+        #os.system('chmod 666 %s' % com mon.SETTINGS_FILE)
 
     def update_setting(self,key,val):
         temp_settings = self.ns.settings

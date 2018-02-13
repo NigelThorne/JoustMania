@@ -7,7 +7,7 @@ import time
 import traceback
 import random
 
-SETTINGSFILE = 'joustsettings.yaml'
+SETTINGS_FILE = 'joustsettings.yaml'
 
 #Human speeds[slow, mid, fast]
 SLOW_WARNING = [0.1, 0.15, 0.28]

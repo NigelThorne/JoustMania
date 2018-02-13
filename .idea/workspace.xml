@@ -2,12 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="be54d471-39b7-4e92-87e2-b854b0f6a3df" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/other.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change beforePath="$PROJECT_DIR$/audio/Menu/notenoughplayers.wav" afterPath="$PROJECT_DIR$/audio/Menu/notenoughplayers.wav" />
-      <change beforePath="$PROJECT_DIR$/joust.py" afterPath="$PROJECT_DIR$/joust.py" />
+      <change beforePath="$PROJECT_DIR$/common.py" afterPath="$PROJECT_DIR$/common.py" />
       <change beforePath="$PROJECT_DIR$/piparty.py" afterPath="$PROJECT_DIR$/piparty.py" />
-      <change beforePath="$PROJECT_DIR$/webui.py" afterPath="$PROJECT_DIR$/webui.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -21,13 +17,13 @@
       <file leaf-file-name="piparty.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/piparty.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="410">
-              <caret line="245" column="29" lean-forward="false" selection-start-line="245" selection-start-column="13" selection-end-line="245" selection-end-column="29" />
+            <state relative-caret-position="660">
+              <caret line="265" column="26" lean-forward="false" selection-start-line="265" selection-start-column="13" selection-end-line="265" selection-end-column="26" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
-                <element signature="e#18445#18760#0" expanded="false" />
-                <element signature="e#18805#19117#0" expanded="false" />
-                <element signature="e#19163#23247#0" expanded="false" />
+                <element signature="e#18500#18815#0" expanded="false" />
+                <element signature="e#18860#19172#0" expanded="false" />
+                <element signature="e#19218#23302#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -36,8 +32,8 @@
       <file leaf-file-name="managers.py" pinned="false" current-in-tab="false">
         <entry file="file://$APPLICATION_HOME_DIR$/helpers/python-skeletons/multiprocessing/managers.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="421">
-              <caret line="53" column="8" lean-forward="false" selection-start-line="53" selection-start-column="8" selection-end-line="53" selection-end-column="8" />
+            <state relative-caret-position="1020">
+              <caret line="37" column="17" lean-forward="false" selection-start-line="37" selection-start-column="6" selection-end-line="37" selection-end-column="17" />
               <folding />
             </state>
           </provider>
@@ -46,7 +42,7 @@
       <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
         <entry file="file://C:/Python27/Lib/multiprocessing/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="230">
+            <state relative-caret-position="410">
               <caret line="89" column="4" lean-forward="false" selection-start-line="89" selection-start-column="4" selection-end-line="89" selection-end-column="4" />
               <folding />
             </state>
@@ -57,7 +53,7 @@
         <entry file="file://$PROJECT_DIR$/pair.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="840">
-              <caret line="28" column="41" lean-forward="true" selection-start-line="28" selection-start-column="41" selection-end-line="28" selection-end-column="41" />
+              <caret line="28" column="41" lean-forward="false" selection-start-line="28" selection-start-column="41" selection-end-line="28" selection-end-column="41" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -69,7 +65,7 @@
         <entry file="file://$PROJECT_DIR$/jm_dbus.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="4560">
-              <caret line="154" column="22" lean-forward="true" selection-start-line="154" selection-start-column="22" selection-end-line="154" selection-end-column="22" />
+              <caret line="154" column="22" lean-forward="false" selection-start-line="154" selection-start-column="22" selection-end-line="154" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -78,8 +74,8 @@
       <file leaf-file-name="webui.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/webui.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-340">
-              <caret line="43" column="22" lean-forward="true" selection-start-line="43" selection-start-column="22" selection-end-line="43" selection-end-column="22" />
+            <state relative-caret-position="710">
+              <caret line="45" column="36" lean-forward="false" selection-start-line="45" selection-start-column="36" selection-end-line="45" selection-end-column="36" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -91,7 +87,7 @@
         <entry file="file://$PROJECT_DIR$/piaudio.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="60">
-              <caret line="89" column="12" lean-forward="true" selection-start-line="89" selection-start-column="12" selection-end-line="89" selection-end-column="12" />
+              <caret line="89" column="12" lean-forward="false" selection-start-line="89" selection-start-column="12" selection-end-line="89" selection-end-column="12" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -103,7 +99,7 @@
         <entry file="file://$PROJECT_DIR$/common.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-210">
-              <caret line="110" column="23" lean-forward="true" selection-start-line="110" selection-start-column="23" selection-end-line="110" selection-end-column="23" />
+              <caret line="110" column="23" lean-forward="false" selection-start-line="110" selection-start-column="23" selection-end-line="110" selection-end-column="23" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -123,11 +119,12 @@
       <find>count_connected</find>
       <find>update_settings_file</find>
       <find>initialize_settings</find>
-      <find>track_move</find>
       <find>pair_move</find>
       <find>Process</find>
       <find>command_queue</find>
       <find>command_from_web</find>
+      <find>track_move</find>
+      <find>force_color</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -142,8 +139,8 @@
         <option value="$PROJECT_DIR$/joust.py" />
         <option value="$PROJECT_DIR$/webui.py" />
         <option value="$PROJECT_DIR$/piaudio.py" />
-        <option value="$PROJECT_DIR$/piparty.py" />
         <option value="$PROJECT_DIR$/pair.py" />
+        <option value="$PROJECT_DIR$/piparty.py" />
       </list>
     </option>
   </component>
@@ -311,7 +308,7 @@
     <entry file="file://$PROJECT_DIR$/piaudio.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
-          <caret line="89" column="12" lean-forward="true" selection-start-line="89" selection-start-column="12" selection-end-line="89" selection-end-column="12" />
+          <caret line="89" column="12" lean-forward="false" selection-start-line="89" selection-start-column="12" selection-end-line="89" selection-end-column="12" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
           </folding>
@@ -321,7 +318,7 @@
     <entry file="file://$PROJECT_DIR$/common.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-210">
-          <caret line="110" column="23" lean-forward="true" selection-start-line="110" selection-start-column="23" selection-end-line="110" selection-end-column="23" />
+          <caret line="110" column="23" lean-forward="false" selection-start-line="110" selection-start-column="23" selection-end-line="110" selection-end-column="23" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
           </folding>
@@ -331,7 +328,7 @@
     <entry file="file://$PROJECT_DIR$/pair.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="840">
-          <caret line="28" column="41" lean-forward="true" selection-start-line="28" selection-start-column="41" selection-end-line="28" selection-end-column="41" />
+          <caret line="28" column="41" lean-forward="false" selection-start-line="28" selection-start-column="41" selection-end-line="28" selection-end-column="41" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
@@ -341,46 +338,46 @@
     <entry file="file://$PROJECT_DIR$/jm_dbus.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4560">
-          <caret line="154" column="22" lean-forward="true" selection-start-line="154" selection-start-column="22" selection-end-line="154" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Python27/Lib/multiprocessing/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="230">
-          <caret line="89" column="4" lean-forward="false" selection-start-line="89" selection-start-column="4" selection-end-line="89" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_HOME_DIR$/helpers/python-skeletons/multiprocessing/managers.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="421">
-          <caret line="53" column="8" lean-forward="false" selection-start-line="53" selection-start-column="8" selection-end-line="53" selection-end-column="8" />
+          <caret line="154" column="22" lean-forward="false" selection-start-line="154" selection-start-column="22" selection-end-line="154" selection-end-column="22" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/webui.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-340">
-          <caret line="43" column="22" lean-forward="true" selection-start-line="43" selection-start-column="22" selection-end-line="43" selection-end-column="22" />
+        <state relative-caret-position="710">
+          <caret line="45" column="36" lean-forward="false" selection-start-line="45" selection-start-column="36" selection-end-line="45" selection-end-column="36" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/piparty.py">
+    <entry file="file://$APPLICATION_HOME_DIR$/helpers/python-skeletons/multiprocessing/managers.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1020">
+          <caret line="37" column="17" lean-forward="false" selection-start-line="37" selection-start-column="6" selection-end-line="37" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Python27/Lib/multiprocessing/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="410">
-          <caret line="245" column="29" lean-forward="false" selection-start-line="245" selection-start-column="13" selection-end-line="245" selection-end-column="29" />
+          <caret line="89" column="4" lean-forward="false" selection-start-line="89" selection-start-column="4" selection-end-line="89" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/piparty.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="660">
+          <caret line="265" column="26" lean-forward="false" selection-start-line="265" selection-start-column="13" selection-end-line="265" selection-end-column="26" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
-            <element signature="e#18445#18760#0" expanded="false" />
-            <element signature="e#18805#19117#0" expanded="false" />
-            <element signature="e#19163#23247#0" expanded="false" />
+            <element signature="e#18500#18815#0" expanded="false" />
+            <element signature="e#18860#19172#0" expanded="false" />
+            <element signature="e#19218#23302#0" expanded="false" />
           </folding>
         </state>
       </provider>
