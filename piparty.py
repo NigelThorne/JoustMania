@@ -280,15 +280,16 @@ class Menu():
         self.choose_new_music()
 
     def choose_new_music(self):
-        self.joust_music = Music(random.choice(glob.glob("audio/Joust/music/*")))
+        self.joust_music = self.load_random_music("Joust")
+        self.zombie_music = self.load_random_music("Zombie")
+        self.commander_music = self.load_random_music("Commander")
+
+    def load_random_music(self, path):
         try:
-            self.zombie_music = Music(random.choice(glob.glob("audio/Zombie/music/*")))
+            return Music(random.choice(glob.glob("audio/%s/music/*" % path)))
         except Exception:
-            self.zombie_music = DummyMusic()
-        try:
-            self.commander_music = Music(random.choice(glob.glob("audio/Commander/music/*")))
-        except Exception:
-            self.commander_music = DummyMusic()
+            return DummyMusic()
+
 
     def refresh_out_moves(self):
         for move in self.moves:
@@ -724,28 +725,40 @@ class Menu():
 
         if self.ns.settings['play_instructions'] and self.ns.settings['play_audio']:
             self.play_random_instructions()
+
+        self.games= {
+            common.Games.Zombies: zombie.Zombie,
+            common.Games.Commander: commander.Commander,
+            common.Games.Ninja: speed_bomb.Bomb,
+            common.Games.Swapper: swapper.Swapper,
+            common.Games.FightClub: fight_club.Fight_club,
+            common.Games.Tournament: tournament.Tournament,
+            #common.Games.JoustFFA: ffa.FreeForAll,
+
+        }
+
         
         if self.game_mode == common.Games.Zombies:
-            zombie.Zombie(game_moves, self.command_queue, self.ns, self.zombie_music)
+            self.games[self.game_mode](game_moves, self.command_queue, self.ns, self.zombie_music)
             self.tracked_moves = {}
         elif self.game_mode == common.Games.Commander:
-            commander.Commander(game_moves, self.command_queue, self.ns, self.commander_music)
+            self.games[self.game_mode](game_moves, self.command_queue, self.ns, self.commander_music)
             self.tracked_moves = {}
         elif self.game_mode == common.Games.Ninja:
-            speed_bomb.Bomb(game_moves, self.command_queue, self.ns, self.commander_music)
+            self.games[self.game_mode](game_moves, self.command_queue, self.ns, self.commander_music)
             self.tracked_moves = {}
         elif self.game_mode == common.Games.Swapper:
-            swapper.Swapper(game_moves, self.command_queue, self.ns, self.joust_music)
+            self.games[self.game_mode](game_moves, self.command_queue, self.ns, self.joust_music)
             self.tracked_moves = {}
         elif self.game_mode == common.Games.FightClub:
             if random.randint(0,1)==1:
                 fight_music = self.commander_music
             else:
                 fight_music = self.joust_music
-            fight_club.Fight_club(game_moves, self.command_queue, self.ns, fight_music)
+            self.games[self.game_mode](game_moves, self.command_queue, self.ns, fight_music)
             self.tracked_moves = {}
         elif self.game_mode == common.Games.Tournament:
-            tournament.Tournament(game_moves, self.command_queue, self.ns, self.joust_music)
+            self.games[self.game_mode](game_moves, self.command_queue, self.ns, self.joust_music)
             self.tracked_moves = {}
         else:
             if self.game_mode == common.Games.JoustFFA and self.experimental:
