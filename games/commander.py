@@ -28,7 +28,7 @@ MAX_MUSIC_SLOW_TIME = 23
 #TODO: make commander should be harder to kill
 SLOW_MAX = 1.3
 SLOW_WARNING = 0.28
-FAST_MAX = 2.5
+FAST_MAX = 2.0
 FAST_WARNING = 1.3
 
 
@@ -90,7 +90,8 @@ def track_move(move_serial, move_num, team, num_teams, dead_move, force_color, m
     no_rumble = time.time() + 1
     move_last_value = None
     move = common.get_move(move_serial, move_num)
-    team_colors = colors.generate_colors(num_teams)
+    # team_colors = colors.generate_colors(num_teams)
+
     #keep on looping while move is not dead
     ready = False
     move.set_leds(0,0,0)
