@@ -347,8 +347,8 @@ class Menu():
             proc = Process(target=track_move, args=(move_serial, move_num, opts, color, self.show_battery, self.dead_count))
             self.move_opts[move_serial] = opts
             self.force_color[move_serial] = color
-            self.tracked_moves[move_serial] = proc
             proc.start()
+            self.tracked_moves[move_serial] = proc
         self.refresh_out_moves()
 
     def game_mode_announcement(self):

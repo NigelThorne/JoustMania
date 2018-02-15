@@ -344,11 +344,11 @@ class Commander():
                                                     power,
                                                     overdrive))
             proc.start()
-            self.tracked_moves[move_serial] = proc
             self.dead_moves[move_serial] = dead_move
             self.force_move_colors[move_serial] = force_color
             self.move_opts[move_serial] = opts
-            
+            self.tracked_moves[move_serial] = proc
+
     def change_all_move_colors(self, r, g, b):
         for color in self.force_move_colors.values():
             colors.change_color(color, r, g, b)

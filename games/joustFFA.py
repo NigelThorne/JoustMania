@@ -378,19 +378,6 @@ class JoustFFA():
                 h_value = 0
         self.running = False
 
-    def werewolf_intro(self):
-        #don't wait so colors change during prompts
-        Audio('audio/Joust/sounds/werewolf intro.wav').start_effect()
-        time.sleep(3)
-        self.change_all_move_colors(0,0,80)
-        time.sleep(2)
-        self.change_all_move_colors(0,0,30)
-        time.sleep(14)
-        self.change_all_move_colors(20, 20, 20)
-        time.sleep(6)
-        self.start_timer = time.time()
-        
-
     def game_loop(self):
         self.track_moves()
         self.show_team_colors.value = 0
