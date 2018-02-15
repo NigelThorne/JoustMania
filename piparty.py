@@ -15,7 +15,7 @@ import joust
 import pair
 import webui
 from games import ffa, zombie, commander, swapper, tournament, speed_bomb, fight_club
-from piaudio import Music, DummyMusic, Audio, InitAudio
+from piaudio import Music, DummyMusic, Audio, InitAudio, DJ
 
 TEAM_NUM = len(colors.team_color_list)
 #TEAM_COLORS = colors.generate_colors(TEAM_NUM)
@@ -244,6 +244,8 @@ class Menu():
         self.web_proc = Process(target=webui.start_web, args=(self.command_queue,self.ns))
         self.web_proc.start()
 
+        self.dj = DJ()
+
         self.command_from_web = ''
         self.initialize_settings()
         self.update_settings_file()
@@ -282,16 +284,9 @@ class Menu():
         self.choose_new_music()
 
     def choose_new_music(self):
-        self.joust_music = self.load_random_music("Joust")
-        self.zombie_music = self.load_random_music("Zombie")
-        self.commander_music = self.load_random_music("Commander")
-
-    def load_random_music(self, path):
-        try:
-            return Music(random.choice(glob.glob("audio/%s/music/*" % path)))
-        except Exception:
-            return DummyMusic()
-
+        self.joust_music = self.dj.load_random_music("Joust")
+        self.zombie_music = self.dj.load_random_music("Zombie")
+        self.commander_music = self.dj.load_random_music("Commander")
 
     def refresh_out_moves(self):
         for move in self.moves:
@@ -342,7 +337,6 @@ class Menu():
             self.force_color[move_serial] = color
             self.refresh_out_moves()
 
-
     def game_mode_announcement(self):
         if self.game_mode == common.Games.JoustFFA:
             Audio('audio/Menu/menu Joust FFA.wav').start_effect()
@@ -367,9 +361,9 @@ class Menu():
         if self.game_mode == common.Games.Random:
             Audio('audio/Menu/menu Random.wav').start_effect()
         if self.game_mode == common.Games.FightClub:
-            os.popen('espeak -ven -p 70 -a 200 "Fight Club"')
+            Audio('audio/Menu/menu FightClub.wav').start_effect()
         if self.game_mode == common.Games.NonStop:
-            os.popen('espeak -ven -p 70 -a 200 "Non stop joust"')
+            Audio('audio/Menu/menu NonStopJoust.wav').start_effect()
 
     def check_change_mode(self):
         change_mode = False
@@ -402,7 +396,7 @@ class Menu():
             if self.ns.settings['play_audio']:
                 self.game_mode_announcement()
                 
-    #all controllers need to opt-in again in order fo the game to start
+    #all controllers need to opt-in again in order for the game to start
     def reset_controller_game_state(self):
         for move_opt in self.move_opts.values():
             #on means off here
@@ -661,29 +655,6 @@ class Menu():
             self.command_from_web = ''
             self.start_game()
 
-    def play_random_instructions(self):
-        if self.game_mode == common.Games.JoustFFA:
-            Audio('audio/Menu/FFA-instructions.wav').start_effect_and_wait()
-        if self.game_mode == common.Games.JoustRandomTeams:
-            Audio('audio/Menu/Teams-instructions.wav').start_effect_and_wait()
-        if self.game_mode == common.Games.Traitor:
-            Audio('audio/Menu/Traitor-instructions.wav').start_effect_and_wait()
-        if self.game_mode == common.Games.WereJoust:
-            Audio('audio/Menu/werewolf-instructions.wav').start_effect_and_wait()
-        if self.game_mode == common.Games.Zombies:
-            Audio('audio/Menu/zombie-instructions.wav').start_effect_and_wait()
-        if self.game_mode == common.Games.Commander:
-            Audio('audio/Menu/commander-instructions.wav').start_effect_and_wait()
-        if self.game_mode == common.Games.Ninja:
-            Audio('audio/Menu/Ninjabomb-instructions.wav').start_effect_and_wait()
-        if self.game_mode == common.Games.Swapper:
-            Audio('audio/Menu/Swapper-instructions.wav').start_effect_and_wait()
-        if self.game_mode == common.Games.Tournament:
-            Audio('audio/Menu/Tournament-instructions.wav').start_effect_and_wait()
-        if self.game_mode == common.Games.FightClub:
-            os.popen('espeak -ven -p 70 -a 200 "Two players fight, the winner must defend thier title, the player with the highest score wins')
-            time.sleep(5)
-
     def start_game(self, random_mode=False):
         self.enable_bt_scanning(False)
         self.refresh_out_moves()
@@ -726,61 +697,47 @@ class Menu():
             self.game_mode = selected_game
 
         if self.ns.settings['play_instructions'] and self.ns.settings['play_audio']:
-            self.play_random_instructions()
+            self.dj.read_instructions(self.game_mode.instructions)
 
         self.games= {
+            common.Games.JoustFFA: joust.Joust,
+            common.Games.JoustTeams: joust.Joust,
+            common.Games.JoustRandomTeams: joust.Joust,
+            common.Games.Traitor: joust.Joust,
+            common.Games.WereJoust: joust.Joust,
             common.Games.Zombies: zombie.Zombie,
             common.Games.Commander: commander.Commander,
-            common.Games.Ninja: speed_bomb.Bomb,
             common.Games.Swapper: swapper.Swapper,
             common.Games.FightClub: fight_club.Fight_club,
             common.Games.Tournament: tournament.Tournament,
-            #common.Games.JoustFFA: ffa.FreeForAll,
-
+            common.Games.NonStop: joust.Joust,
+            common.Games.Ninja: speed_bomb.Bomb,
+            common.Games.Random: joust.Joust,
         }
 
-        
-        if self.game_mode == common.Games.Zombies:
-            self.games[self.game_mode](game_moves, self.command_queue, self.ns, self.zombie_music)
-            self.tracked_moves = {}
-        elif self.game_mode == common.Games.Commander:
-            self.games[self.game_mode](game_moves, self.command_queue, self.ns, self.commander_music)
-            self.tracked_moves = {}
-        elif self.game_mode == common.Games.Ninja:
-            self.games[self.game_mode](game_moves, self.command_queue, self.ns, self.commander_music)
-            self.tracked_moves = {}
-        elif self.game_mode == common.Games.Swapper:
-            self.games[self.game_mode](game_moves, self.command_queue, self.ns, self.joust_music)
-            self.tracked_moves = {}
-        elif self.game_mode == common.Games.FightClub:
-            if random.randint(0,1)==1:
-                fight_music = self.commander_music
-            else:
-                fight_music = self.joust_music
-            self.games[self.game_mode](game_moves, self.command_queue, self.ns, fight_music)
-            self.tracked_moves = {}
-        elif self.game_mode == common.Games.Tournament:
-            self.games[self.game_mode](game_moves, self.command_queue, self.ns, self.joust_music)
-            self.tracked_moves = {}
+        fight_music = self.dj.load_random_music(self.game_mode.music_folder)
+
+        if self.game_mode == common.Games.JoustFFA and self.experimental:
+            print("Playing EXPERIMENTAL FFA Mode.")
+            moves = [ common.get_move(serial, num) for num, serial in enumerate(game_moves) ]
+            game = ffa.FreeForAll(moves, fight_music)
+            game.run_loop()
         else:
-            if self.game_mode == common.Games.JoustFFA and self.experimental:
-                print("Playing EXPERIMENTAL FFA Mode.")
-                moves = [ common.get_move(serial, num) for num, serial in enumerate(game_moves) ]
-                game = ffa.FreeForAll(moves, self.joust_music)
-                game.run_loop()
-            else:
-                #may need to put in moves that have selected to not be in the game
-                # NWT: TODO Make list of parameters consistent
-                joust.Joust(game_moves, self.command_queue, self.ns, self.joust_music, self.teams, self.game_mode)
-            self.tracked_moves = {}
+            #may need to put in moves that have selected to not be in the game
+            # NWT: TODO Make list of parameters consistent
+            self.games[self.game_mode](game_moves, self.command_queue, self.ns, fight_music, self.teams, self.game_mode)
+
+        self.tracked_moves = {}
         if random_mode:
             self.game_mode = common.Games.Random
             if self.ns.settings['play_instructions']:
                 if self.ns.settings['play_audio']:
                     Audio('audio/Menu/tradeoff2.wav').start_effect_and_wait()
+
         self.menu_music_needs_playing = True
         #reset music
         self.choose_new_music()
+
         #turn off admin mode so someone can't accidentally press a button    
         self.admin_move = None
         self.random_added = []

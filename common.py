@@ -46,28 +46,29 @@ def lerp(a, b, p):
     return a*(1 - p) + b*p
 
 class Games(enum.Enum):
-    JoustFFA = (0, 'Joust Free-for-All', 2)
-    JoustTeams = (1, 'Joust Teams', 3)
-    JoustRandomTeams = (2, 'Joust Random Teams', 3)
-    Traitor = (3, 'Traitors', 6)
-    WereJoust = (4, 'Werewolves', 3)
-    Zombies = (5, 'Zombies', 4)
-    Commander = (6, 'Commander', 4)
-    Swapper = (7, 'Swapper', 3)
-    FightClub = (8, 'Fight Club', 2)
-    Tournament = (9, 'Tournament', 3)
-    NonStop = (10, 'Non Stop Joust', 2)
-    Ninja = (11, 'Ninja Bomb', 2)
-    Random = (12, 'Random', 2)
+    JoustFFA = (0, 'Joust Free-for-All', 2, "Joust", "FFA")
+    JoustTeams = (1, 'Joust Teams', 3, "Joust", "None")
+    JoustRandomTeams = (2, 'Joust Random Teams', 3, "Joust", "Teams")
+    Traitor = (3, 'Traitors', 6, "Joust", "Traitor")
+    WereJoust = (4, 'Werewolves', 3, "Joust", "werewolf")
+    Zombies = (5, 'Zombies', 4, "Zombie", "zombie")
+    Commander = (6, 'Commander', 4, "Commander", "commander")
+    Swapper = (7, 'Swapper', 3, "Joust", "Swapper")
+    FightClub = (8, 'Fight Club', 2, "Commander", "FightClub")
+    Tournament = (9, 'Tournament', 3, "Joust", "Tournament")
+    NonStop = (10, 'Non Stop Joust', 2, "Joust", "None")
+    Ninja = (11, 'Ninja Bomb', 2, "Commander", "Ninjabomb")
+    Random = (12, 'Random', 2, "Joust", "None")
 
-
-    def __new__(cls, value, pretty_name, min_players):
+    def __new__(cls, value, pretty_name, min_players, music_folder, instructions):
         """This odd constructor lets us keep Foo.value as an integer, but also
            add some extra properties to each option."""
         obj = object.__new__(cls)
         obj._value_ = value
         obj.pretty_name = pretty_name
         obj.minimum_players = min_players
+        obj.music_folder = music_folder
+        obj.instructions = instructions
         return obj
 
     def next(self):

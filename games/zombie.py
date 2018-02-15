@@ -201,7 +201,7 @@ def track_controller(serial, num_try, opts):
 #since only normal music will be playing
 #need to make this a class with zombie killing defs
 class Zombie:
-    def __init__(self, cont_alive, command_queue, ns, music):
+    def __init__(self, cont_alive, command_queue, ns, music, teams, game_mode):
         
         self.command_queue = command_queue
         self.ns = ns

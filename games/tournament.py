@@ -154,7 +154,7 @@ def track_move(move_serial, move_num, team, num_teams, dead_move, force_color, m
 
 
 class Tournament():
-    def __init__(self, moves, command_queue, ns, music):
+    def __init__(self, moves, command_queue, ns, music, teams, game_mode):
 
         self.command_queue = command_queue
         self.ns = ns

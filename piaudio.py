@@ -3,7 +3,11 @@ import wave
 import functools
 import io
 import numpy
-import psutil, os
+import psutil
+import glob
+import os
+import os.path
+import random
 import time
 import scipy.signal as signal
 from multiprocessing import Value
@@ -17,7 +21,7 @@ import common
 
 def audio_loop(wav_data, ratio, stop_proc):
     # TODO: As a future improvment, we could precompute resampled versions of the track
-    # at the "steady" playback rates, and only do dynamic resampling when transitioning
+    # at the "steady" playback rates, and only do dynamic re-sampling when transitioning
     # between them.
 
     PERIOD=1024 * 4
@@ -144,7 +148,7 @@ class Music:
     def start_audio_loop(self):
         self.wait_for_sample_()
         print ('audio file is ' + str(self.fname_))
-        # Start audio in seperate process to be non-blocking
+        # Start audio in separate process to be non-blocking
         self.stop_proc = Value('i', 0)
         self.ratio = Value('d' , 1.0)
 
@@ -184,6 +188,17 @@ class DummyMusic:
     def transition_ratio(self, new_ratio, transition_duration=None):
         async def do_nothing(): pass
         return asyncio.ensure_future(do_nothing())
+
+class DJ:
+    def load_random_music(self, path):
+        if path != "None":
+            try:
+                return Music(random.choice(glob.glob("audio/%s/music/*" % path)))
+            except Exception:
+                return DummyMusic()
+
+    def read_instructions(self, path):
+        Audio('audio/Menu/%s-instructions.wav' % path).start_effect_and_wait()
 
 def InitAudio():
     pygame.mixer.init(47000, -16, 2 , 4096)
