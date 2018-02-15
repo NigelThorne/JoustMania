@@ -48,11 +48,14 @@ def track_move(move_serial, move_num, team, team_color_enum, dead_move, force_co
     move_last_value = None
     move = common.get_move(move_serial, move_num)
     my_team_colors = team_color_enum.value
+    werewolf = False
     vibrate = False
     change_arr = [0,0,0]
     vibration_time = time.time() + 1
     flash_lights = True
     flash_lights_timer = 0
+    if team < 0:
+        werewolf = True
 
     #keep on looping while move is not dead
     while True:
@@ -63,9 +66,16 @@ def track_move(move_serial, move_num, team, team_color_enum, dead_move, force_co
             time.sleep(0.01)
             move.set_leds(*force_color)
 
-            if sum(force_color) == 30:
-                move.set_leds(*colors.Colors.Black.value)
-            move.set_rumble(0)
+            if sum(force_color) > 75:
+                if werewolf:
+                    move.set_rumble(80)
+            else:
+                if sum(force_color) == 30:
+                    if werewolf:
+                        move.set_leds(*colors.Colors.Blue40.value)
+                    else:
+                        move.set_leds(*colors.Colors.Black.value)
+                move.set_rumble(0)
             move.update_leds()
             no_rumble = time.time() + 0.5
         elif dead_move.value == 1:
@@ -79,8 +89,12 @@ def track_move(move_serial, move_num, team, team_color_enum, dead_move, force_co
                     change_arr[2] = change_real
                     change = (change_arr[0] + change_arr[1]+change_arr[2])/3
                     speed_percent = (music_speed.value - SLOW_MUSIC_SPEED)/(FAST_MUSIC_SPEED - SLOW_MUSIC_SPEED)
-                    warning = common.lerp(SLOW_WARNING, FAST_WARNING, speed_percent)
-                    threshold = common.lerp(SLOW_MAX, FAST_MAX, speed_percent)
+                    if werewolf:
+                        warning = common.lerp(WERE_SLOW_WARNING, WERE_FAST_WARNING, speed_percent)
+                        threshold = common.lerp(WERE_SLOW_MAX, WERE_FAST_MAX, speed_percent) 
+                    else:
+                        warning = common.lerp(SLOW_WARNING, FAST_WARNING, speed_percent)
+                        threshold = common.lerp(SLOW_MAX, FAST_MAX, speed_percent)
 
 
 
@@ -122,9 +136,17 @@ def track_move(move_serial, move_num, team, team_color_enum, dead_move, force_co
             move.update_leds()
         
         elif dead_move.value < 1:
-            time.sleep(0.5)
 
-class Joust():
+            time.sleep(0.5)
+            if dead_move.value == -1:
+                time.sleep(2)
+                move_last_value = 0
+                change_arr = [0,0,0]
+                no_rumble = time.time() + 1
+                vibration_time = time.time() + 1
+                dead_move.value = 2
+
+class NonStopJoust():
 
     def __init__(self, moves, command_queue, ns, music, teams, game_mode):
 
@@ -132,8 +154,6 @@ class Joust():
         self.ns = ns
 
         print(self.ns.settings)
-
-        self.game_mode = game_mode
 
         #save locally in case settings change from web
         self.play_audio = self.ns.settings['play_audio']
@@ -152,6 +172,7 @@ class Joust():
         self.teams = teams
         self.num_teams = len(colors.team_color_list)
 
+        self.werewolf_timer = 35
         self.start_timer = time.time()
         self.audio_cue = 0
         self.num_dead = 0
@@ -180,21 +201,12 @@ class Joust():
         print("SLOWMAX IS {}".format(SLOW_MAX))
 
 
-        if game_mode == common.Games.JoustRandomTeams:
-            if len(moves) <= 5:
-                self.num_teams = 2
-            elif len(moves) in [6,7]:
-                self.num_teams = 3
-            else: #8 or more
-                self.num_teams = 4
+        self.num_teams = len(moves)
 
         print('HELLO THE NUMBER OF TEAMS IS %d' % self.num_teams)
 
-        if self.game_mode == common.Games.JoustTeams:
-            self.team_colors = colors.team_color_list
-        else:
-            self.team_colors = colors.generate_team_colors(self.num_teams,self.color_lock,self.color_lock_choices)
-            self.generate_random_teams(self.num_teams)
+        self.team_colors = colors.generate_team_colors(self.num_teams,self.color_lock,self.color_lock_choices)
+        self.generate_random_teams(self.num_teams)
 
         if self.play_audio:
             self.start_beep = Audio('audio/Joust/sounds/start.wav')
@@ -313,6 +325,7 @@ class Joust():
         else:
             return team
 
+
     def check_end_game(self):
         winning_team = -100
         team_win = True
@@ -334,8 +347,28 @@ class Joust():
                 dead.value = 1
                 if self.play_audio:
                     self.revive.start_effect()
-
-        if team_win:
+                
+                    
+        if self.audio_cue == 0 and time.time() > self.non_stop_time - 60:
+            Audio('audio/Zombie/sound_effects/1 minute.wav').start_effect()
+            self.audio_cue += 1
+        if self.audio_cue == 1 and time.time() > self.non_stop_time - 30:
+            Audio('audio/Zombie/sound_effects/30 seconds.wav').start_effect()
+            self.audio_cue += 1
+        if time.time() > self.non_stop_time:
+            lowest_score = 100000
+            for move, score in self.non_stop_deaths.items():
+                self.dead_moves[move].value = 0
+                if score == lowest_score:
+                    self.winning_moves.append(move)
+                if score < lowest_score:
+                    lowest_score = score
+                    self.winning_moves = []
+                    self.winning_moves.append(move)
+            self.game_end = True
+                    
+                
+        elif team_win:
             self.update_status('ending',winning_team)
             if self.play_audio:
                 self.end_game_sound(winning_team)
@@ -368,36 +401,10 @@ class Joust():
                 h_value = 0
         self.running = False
 
-    def end_game_sound(self, winning_team):
-        win_team_name = self.team_colors[winning_team].name
-        if win_team_name == 'Pink':
-            team_win = Audio('audio/Joust/sounds/pink team win.wav')
-        elif win_team_name == 'Magenta':
-            team_win = Audio('audio/Joust/sounds/magenta team win.wav')
-        elif win_team_name == 'Orange':
-            team_win = Audio('audio/Joust/sounds/orange team win.wav')
-        elif win_team_name == 'Yellow':
-            team_win = Audio('audio/Joust/sounds/yellow team win.wav')
-        elif win_team_name == 'Green':
-            team_win = Audio('audio/Joust/sounds/green team win.wav')
-        elif win_team_name == 'Turquoise':
-            team_win = Audio('audio/Joust/sounds/cyan team win.wav')
-        elif win_team_name == 'Blue':
-            team_win = Audio('audio/Joust/sounds/blue team win.wav')
-        else: #if win_team_name == 'Purple':
-            team_win = Audio('audio/Joust/sounds/purple team win.wav')
-        try:
-            team_win.start_effect()
-        except:
-            pass
-        
+
 
     def game_loop(self):
         self.track_moves()
-        if self.game_mode == common.Games.JoustRandomTeams:
-            self.show_team_colors.value = 1
-            if self.play_audio:
-                Audio('audio/Joust/sounds/teams_form.wav').start_effect_and_wait()
         self.show_team_colors.value = 0
         self.count_down()
         self.change_time = time.time() + 6
@@ -440,20 +447,10 @@ class Joust():
 
     def update_status(self,game_status,winning_team=-1):
         data ={'game_status' : game_status,
-               'game_mode' : self.game_mode.pretty_name,
+               'game_mode' : "Non Stop Joust",
                'winning_team' : winning_team}
-        num = self.num_teams
-        team_alive = [0]*num
-        team_total = [0]*num
-
-        for move in self.move_serials:
-            team = self.teams[move]
-            team_total[team] += 1
-            if self.dead_moves[move].value == 1:
-                team_alive[team] += 1
-        team_comp = list(zip(team_total,team_alive))
-        data['team_comp'] = team_comp
-        data['team_names'] = [color.name + ' Team' for color in self.team_colors]
+        data['total_players'] = len(self.move_serials)
+        data['remaining_players'] = len([x[0] for x in self.dead_moves.items() if x[1].value==1])
 
         self.ns.status = data
 

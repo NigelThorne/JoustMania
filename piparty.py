@@ -14,7 +14,7 @@ import common
 import joust
 import pair
 import webui
-from games import ffa, zombie, commander, swapper, tournament, speed_bomb, fight_club, traitor, joustFFA, were_joust
+from games import ffa, zombie, commander, swapper, tournament, speed_bomb, fight_club, traitor, joustFFA, were_joust, nonstop_joust
 from piaudio import Music, DummyMusic, Audio, InitAudio, DJ
 
 TEAM_NUM = len(colors.team_color_list)
@@ -246,7 +246,7 @@ class GameFactory():
             common.Games.Swapper: swapper.Swapper,
             common.Games.FightClub: fight_club.Fight_club,
             common.Games.Tournament: tournament.Tournament,
-            common.Games.NonStop: joust.Joust,
+            common.Games.NonStop: nonstop_joust.NonStopJoust,
             common.Games.Ninja: speed_bomb.Bomb,
             common.Games.Random: joust.Joust,
         }
@@ -303,13 +303,6 @@ class Menu():
 
         self.game_loop_iteration_counter = 0 # game_loop iteration count
 
-        #load audio now so it converts before the game begins
-        self.choose_new_music()
-
-    def choose_new_music(self):
-        self.joust_music = self.dj.load_random_music("Joust")
-        self.zombie_music = self.dj.load_random_music("Zombie")
-        self.commander_music = self.dj.load_random_music("Commander")
 
     def refresh_out_moves(self):
         for move in self.moves:
@@ -722,8 +715,6 @@ class Menu():
                     Audio('audio/Menu/tradeoff2.wav').start_effect_and_wait()
 
         self.menu_music_needs_playing = True
-        #reset music
-        self.choose_new_music()
 
         #turn off admin mode so someone can't accidentally press a button    
         self.admin_move = None
