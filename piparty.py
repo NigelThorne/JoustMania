@@ -230,6 +230,30 @@ def track_move(serial, move_num, move_opts, force_color, battery, dead_count):
 
         move.update_leds()
 
+class GameFactory():
+    def __init__(self, command_queue, ns):
+        self.ns = ns
+        self.command_queue = command_queue
+        # Ideally the games would register themselves with the GameFactory...
+        self.games= {
+            common.Games.JoustFFA: joust.Joust,
+            common.Games.JoustTeams: joust.Joust,
+            common.Games.JoustRandomTeams: joust.Joust,
+            common.Games.Traitor: joust.Joust,
+            common.Games.WereJoust: joust.Joust,
+            common.Games.Zombies: zombie.Zombie,
+            common.Games.Commander: commander.Commander,
+            common.Games.Swapper: swapper.Swapper,
+            common.Games.FightClub: fight_club.Fight_club,
+            common.Games.Tournament: tournament.Tournament,
+            common.Games.NonStop: joust.Joust,
+            common.Games.Ninja: speed_bomb.Bomb,
+            common.Games.Random: joust.Joust,
+        }
+
+    def create_game(self, game_mode, game_moves, fight_music, teams ):
+        return self.games[game_mode](game_moves, self.command_queue, self.ns, fight_music, teams, game_mode)
+
 class Menu():
     def __init__(self):
 
@@ -245,6 +269,7 @@ class Menu():
         self.web_proc.start()
 
         self.dj = DJ()
+        self.game_factory = GameFactory(self.command_queue, self.ns)
 
         self.command_from_web = ''
         self.initialize_settings()
@@ -678,33 +703,16 @@ class Menu():
         if self.ns.settings['play_instructions'] and self.ns.settings['play_audio']:
             self.dj.read_instructions(self.game_mode.instructions)
 
-        self.games= {
-            common.Games.JoustFFA: joust.Joust,
-            common.Games.JoustTeams: joust.Joust,
-            common.Games.JoustRandomTeams: joust.Joust,
-            common.Games.Traitor: joust.Joust,
-            common.Games.WereJoust: joust.Joust,
-            common.Games.Zombies: zombie.Zombie,
-            common.Games.Commander: commander.Commander,
-            common.Games.Swapper: swapper.Swapper,
-            common.Games.FightClub: fight_club.Fight_club,
-            common.Games.Tournament: tournament.Tournament,
-            common.Games.NonStop: joust.Joust,
-            common.Games.Ninja: speed_bomb.Bomb,
-            common.Games.Random: joust.Joust,
-        }
-
         fight_music = self.dj.load_random_music(self.game_mode.music_folder)
 
         if self.game_mode == common.Games.JoustFFA and self.experimental:
             print("Playing EXPERIMENTAL FFA Mode.")
             moves = [ common.get_move(serial, num) for num, serial in enumerate(game_moves) ]
             game = ffa.FreeForAll(moves, fight_music)
-            game.run_loop()
         else:
             #may need to put in moves that have selected to not be in the game
-            # NWT: TODO Make list of parameters consistent
-            self.games[self.game_mode](game_moves, self.command_queue, self.ns, fight_music, self.teams, self.game_mode)
+            game = self.game_factory.create_game(self.game_mode, game_moves, fight_music, self.teams)
+        game.game_loop()
 
         self.tracked_moves = {}
         if random_mode:

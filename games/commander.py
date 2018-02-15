@@ -303,7 +303,6 @@ class Commander():
         self.game_end = False
         self.winning_moves = []
         
-        self.game_loop()
 
 
     def generate_random_teams(self, num_teams):

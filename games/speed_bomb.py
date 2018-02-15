@@ -240,7 +240,6 @@ class Bomb():
         self.game_end = False
 
 
-        self.game_loop()
 
     def reset_bomb_length(self):
         self.bomb_length = 4.0

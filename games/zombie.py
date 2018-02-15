@@ -236,7 +236,6 @@ class Zombie:
         self.effect_cue = 0
 
         self.kill_game = False
-        self.Start()
 
         
     def get_kill_time(self):
@@ -290,7 +289,7 @@ class Zombie:
 
         
     
-    def Start(self):
+    def game_loop(self):
         running = True
         moves = []
         for move_num in range(len(self.controllers_alive)):

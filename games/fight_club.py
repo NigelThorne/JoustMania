@@ -250,8 +250,7 @@ class Fight_club():
         self.currently_changing = False
         self.game_end = False
         self.winning_moves = []
-        self.game_loop()
-        
+
     def create_fighter_list(self):
         self.fighter_list = self.move_serials[:]
         shuffle(self.fighter_list)

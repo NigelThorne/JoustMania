@@ -89,7 +89,7 @@ class FreeForAll:
             self.players.cancel_effects()
 
     # TODO: Ideally, the main game loop in piparty.py should handle setting up async.
-    def run_loop(self):
+    def game_loop(self):
         loop = asyncio.get_event_loop()
         loop.set_debug(True)
         loop.run_until_complete(self.run())

@@ -296,7 +296,6 @@ class Joust():
         self.game_end = False
         self.winning_moves = []        
         
-        self.game_loop()
 
 
     def choose_werewolf(self, were_num):

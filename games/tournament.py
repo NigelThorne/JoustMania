@@ -214,7 +214,6 @@ class Tournament():
         self.currently_changing = False
         self.game_end = False
         self.winning_moves = []
-        self.game_loop()
 
     def generate_tourney_list(self, player_num):
         def divide(arr, depth, m):
