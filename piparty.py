@@ -11,10 +11,10 @@ import yaml
 
 import colors
 import common
-import joust
 import pair
 import webui
-from games import ffa, zombie, commander, swapper, tournament, speed_bomb, fight_club, traitor, joustFFA, were_joust, nonstop_joust
+from games import ffa, zombie, commander, swapper, tournament, speed_bomb, fight_club, traitor, joustFFA, were_joust, \
+    nonstop_joust, joust_random_teams, joust
 from piaudio import Music, DummyMusic, Audio, InitAudio, DJ
 
 TEAM_NUM = len(colors.team_color_list)
@@ -238,7 +238,7 @@ class GameFactory():
         self.games= {
             common.Games.JoustFFA: joustFFA.JoustFFA,
             common.Games.JoustTeams: joust.Joust,
-            common.Games.JoustRandomTeams: joust.Joust,
+            common.Games.JoustRandomTeams: joust_random_teams.JoustRandomTeams,
             common.Games.Traitor: traitor.Traitor,
             common.Games.WereJoust: were_joust.WereJoust,
             common.Games.Zombies: zombie.Zombie,
@@ -308,10 +308,10 @@ class Menu():
         for move in self.moves:
             serial = move.get_serial()
             if serial in self.move_opts:
-                if self.move_opts[move.get_serial()][Opts.alive.value] == Alive.off.value:
-                    self.out_moves[move.get_serial()] = Alive.off.value
+                if self.move_opts[serial][Opts.alive.value] == Alive.off.value:
+                    self.out_moves[serial] = Alive.off.value
                 else:
-                    self.out_moves[move.get_serial()] = Alive.on.value
+                    self.out_moves[serial] = Alive.on.value
 
     def check_for_new_moves(self):
         self.pair.enable_bt_scanning(True)
@@ -346,11 +346,10 @@ class Menu():
             
             #now start tracking the move controller
             proc = Process(target=track_move, args=(move_serial, move_num, opts, color, self.show_battery, self.dead_count))
-            proc.start()
-
             self.move_opts[move_serial] = opts
-            self.tracked_moves[move_serial] = proc
             self.force_color[move_serial] = color
+            self.tracked_moves[move_serial] = proc
+            proc.start()
             self.refresh_out_moves()
 
     def game_mode_announcement(self):
@@ -402,7 +401,7 @@ class Menu():
         if change_mode:
             self.game_mode = self.game_mode.next()
             self.reset_controller_game_state()
-            if not self.ns.settings['play_audio']:
+            if not self.ns.settings['play_audio']: #skip games that need sound
                 if self.game_mode == common.Games.Commander:
                     self.game_mode = self.game_mode.next()
                 if self.game_mode == common.Games.WereJoust:
@@ -422,31 +421,34 @@ class Menu():
     def no_playstation_controllers_attached_to_usb(self):
         return "0" in os.popen('lsusb | grep "PlayStation Move motion controller" | wc -l').read()
 
-    def has_tracked_controllers(self):
-        return len(self.tracked_moves) > 0
-
-    def game_loop(self):
+    def menu_loop(self):
         self.menu_music_needs_playing = True
         while True:
             self.play_menu_music()
             self.game_loop_iteration_counter= self.game_loop_iteration_counter + 1
+
             if self.pairing_via_usb_currently and self.no_playstation_controllers_attached_to_usb():
                 self.pairing_via_usb_currently = False
 
-            if not self.pairing_via_usb_currently:
-                if psmove.count_connected() != len(self.tracked_moves):
-                    for move_num, move in enumerate(self.moves):
-                        if move.connection_type == psmove.Conn_USB:
-                            self.pair_usb_move(move)
-                        else:
-                            self.pair_move(move, move_num)
-                self.check_for_new_moves()
-                if self.has_tracked_controllers():
-                    self.check_change_mode()
-                    self.check_admin_controls()
-                    self.check_start_game()
-                self.check_command_queue()
-                self.update_status('menu')
+            if self.has_untracked_controllers():
+                for move_num, move in enumerate(self.moves):
+                    if move.connection_type == psmove.Conn_USB:
+                        self.pair_usb_move(move)  #may be ignored if already pairing
+                    else:
+                        self.pair_move(move, move_num)
+            self.check_for_new_moves()
+            if self.has_tracked_controllers():
+                self.check_change_mode()
+                self.check_admin_controls()
+                self.check_start_game()
+            self.check_command_queue()
+            self.update_status('menu')
+
+    def has_tracked_controllers(self):
+        return len(self.tracked_moves) > 0
+
+    def has_untracked_controllers(self):
+        return psmove.count_connected() != len(self.tracked_moves)
 
     def play_menu_music(self):
         if self.menu_music_needs_playing:
@@ -756,4 +758,4 @@ class Menu():
 if __name__ == "__main__":
     InitAudio()
     piparty = Menu()
-    piparty.game_loop()
+    piparty.menu_loop()

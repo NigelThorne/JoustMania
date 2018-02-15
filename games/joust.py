@@ -43,7 +43,7 @@ END_GAME_PAUSE = 6
 KILL_GAME_PAUSE = 4
 
 
-def track_move(move_serial, move_num, team, team_color_enum, dead_move, force_color, music_speed, show_team_colors, red_on_kill):
+def track_move(move_serial, move_num, team_color_enum, dead_move, force_color, music_speed, show_team_colors, red_on_kill):
     no_rumble = time.time() + 1
     move_last_value = None
     move = common.get_move(move_serial, move_num)
@@ -179,22 +179,10 @@ class Joust():
 
         print("SLOWMAX IS {}".format(SLOW_MAX))
 
-
-        if game_mode == common.Games.JoustRandomTeams:
-            if len(moves) <= 5:
-                self.num_teams = 2
-            elif len(moves) in [6,7]:
-                self.num_teams = 3
-            else: #8 or more
-                self.num_teams = 4
-
         print('HELLO THE NUMBER OF TEAMS IS %d' % self.num_teams)
 
-        if self.game_mode == common.Games.JoustTeams:
-            self.team_colors = colors.team_color_list
-        else:
-            self.team_colors = colors.generate_team_colors(self.num_teams,self.color_lock,self.color_lock_choices)
-            self.generate_random_teams(self.num_teams)
+        self.team_colors = colors.generate_team_colors(self.num_teams,self.color_lock,self.color_lock_choices)
+        self.generate_random_teams(self.num_teams)
 
         if self.play_audio:
             self.start_beep = Audio('audio/Joust/sounds/start.wav')
@@ -235,7 +223,6 @@ class Joust():
             force_color = Array('i', [1] * 3)
             proc = Process(target=track_move, args=(move_serial,
                                                     move_num,
-                                                    self.teams[move_serial],
                                                     self.team_colors[self.teams[move_serial]],
                                                     dead_move,
                                                     force_color,
@@ -394,10 +381,6 @@ class Joust():
 
     def game_loop(self):
         self.track_moves()
-        if self.game_mode == common.Games.JoustRandomTeams:
-            self.show_team_colors.value = 1
-            if self.play_audio:
-                Audio('audio/Joust/sounds/teams_form.wav').start_effect_and_wait()
         self.show_team_colors.value = 0
         self.count_down()
         self.change_time = time.time() + 6
