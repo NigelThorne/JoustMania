@@ -19,7 +19,7 @@ while not exit:
 		move.poll()
 		print("Temperature is %d" % move.get_temperature())
 		if move.connection_type == psmove.Conn_USB:
-			pairObj.pair_move(move)
+			pairObj.pair_move_by_usb(move)
 			move.set_leds(100,100,100)
 			exit = False
 			move.update_leds()

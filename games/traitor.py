@@ -68,8 +68,7 @@ def track_move(move_serial, move_num, team, team_color_enum, dead_move, force_co
             time.sleep(0.01)
             move.set_leds(*force_color)
 
-            if sum(force_color) > 75:
-            else:
+            if sum(force_color) <= 75:
                 if sum(force_color) == 30:
                     move.set_leds(*colors.Colors.Black.value)
                 move.set_rumble(0)
