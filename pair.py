@@ -25,9 +25,6 @@ class Pair():
         list of known devices
         """
         for hci, addr in self.hci_dict.items():
-            proxy = jm_dbus.get_adapter_proxy(hci)
-            devices = jm_dbus.get_node_child_names(proxy)
-
             self.bt_devices[addr] = jm_dbus.get_attached_addresses(hci)
 
     def update_adapters(self):
@@ -43,6 +40,9 @@ class Pair():
         self.pre_existing_devices()
 
     def check_if_not_paired(self, addr):
+        """
+        Early out when you find the address on a known device
+        """
         for devs in self.bt_devices.keys():
             if addr in self.bt_devices[devs]:
                 return False
@@ -66,3 +66,14 @@ class Pair():
                 self.pre_existing_devices()
                 if self.check_if_not_paired(move.get_serial().upper()):
                     move.pair_custom(self.get_lowest_bt_device())
+
+    def enable_bt_scanning(self, on=True):
+        bt_hcis = list(jm_dbus.get_hci_dict().keys())
+
+        for hci in bt_hcis:
+            if jm_dbus.enable_adapter(hci):
+                self.update_adapters()
+            if on:
+                jm_dbus.enable_pairable(hci)
+            else:
+                jm_dbus.disable_pairable(hci)

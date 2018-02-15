@@ -3,17 +3,16 @@ import os
 import os.path
 import random
 import time
+from enum import Enum
 from multiprocessing import Process, Value, Array, Queue, Manager
 
-import pair
 import psmove
 import yaml
-from enum import Enum
 
 import colors
 import common
-import jm_dbus
 import joust
+import pair
 import webui
 from games import ffa, zombie, commander, swapper, tournament, speed_bomb, fight_club
 from piaudio import Music, DummyMusic, Audio, InitAudio
@@ -53,6 +52,8 @@ class Sensitivity(Enum):
     slow = 0
     mid = 1
     fast = 2
+
+
 #run as a separate process
 def track_move(serial, move_num, move_opts, force_color, battery, dead_count):
     move = common.get_move(serial, move_num)
@@ -262,7 +263,7 @@ class Menu():
         self.show_battery = Value('i', 0)
         
 
-        self.pair_one_move = True #only allow one move to be paired at a time
+        self.pairing_via_usb_currently = False #only allow one move to be paired at a time
         self.tracked_moves = {}
         self.force_color = {} #used to force the color change of a move
 
@@ -275,22 +276,24 @@ class Menu():
 
         self.pair = pair.Pair()
 
-        self.i = 0
+        self.game_loop_iteration_counter = 0 # game_loop iteration count
+
         #load audio now so it converts before the game begins
         self.choose_new_music()
 
     def choose_new_music(self):
-        self.joust_music = Music(random.choice(glob.glob("audio/Joust/music/*")))
-        try:
-            self.zombie_music = Music(random.choice(glob.glob("audio/Zombie/music/*")))
-        except Exception:
-            self.zombie_music = DummyMusic()
-        try:
-            self.commander_music = Music(random.choice(glob.glob("audio/Commander/music/*")))
-        except Exception:
-            self.commander_music = DummyMusic()
+        self.joust_music = self.load_random_music("Joust")
+        self.zombie_music = self.load_random_music("Zombie")
+        self.commander_music = self.load_random_music("Commander")
 
-    def exclude_out_moves(self):
+    def load_random_music(self, path):
+        try:
+            return Music(random.choice(glob.glob("audio/%s/music/*" % path)))
+        except Exception:
+            return DummyMusic()
+
+
+    def refresh_out_moves(self):
         for move in self.moves:
             serial = move.get_serial()
             if serial in self.move_opts:
@@ -300,37 +303,22 @@ class Menu():
                     self.out_moves[move.get_serial()] = Alive.on.value
 
     def check_for_new_moves(self):
-        self.enable_bt_scanning(True)
+        self.pair.enable_bt_scanning(True)
         #need to start tracking of new moves in here
         if psmove.count_connected() != self.move_count:
             self.moves = [psmove.PSMove(x) for x in range(psmove.count_connected())]
             self.move_count = len(self.moves)
-        #doesn't work
-        #self.alive_count = len([move.get_serial() for move in self.moves if self.move_opts[move.get_serial()][Opts.alive.value] == Alive.on.value])
-        
-
-    def enable_bt_scanning(self, on=True):
-        bt_hcis = list(jm_dbus.get_hci_dict().keys())
-
-        for hci in bt_hcis:
-            if jm_dbus.enable_adapter(hci):
-                self.pair.update_adapters()
-            if on:
-                jm_dbus.enable_pairable(hci)
-            else:
-                jm_dbus.disable_pairable(hci)
 
     def pair_usb_move(self, move):
-        move_serial = move.get_serial()
-        if move_serial not in self.tracked_moves:
+        if not self.pairing_via_usb_currently:
+            move_serial = move.get_serial()
             if move.connection_type == psmove.Conn_USB:
-                if move_serial not in self.paired_moves:
+                self.pairing_via_usb_currently = True
+                if move_serial not in self.tracked_moves:
                     self.pair.pair_move(move)
                     move.set_leds(255,255,255)
                     move.update_leds()
-                    self.paired_moves.append(move_serial)
-                    self.pair_one_move = False
-        
+
     def pair_move(self, move, move_num):
         move_serial = move.get_serial()
         if move_serial not in self.tracked_moves:
@@ -352,7 +340,7 @@ class Menu():
             self.move_opts[move_serial] = opts
             self.tracked_moves[move_serial] = proc
             self.force_color[move_serial] = color
-            self.exclude_out_moves()
+            self.refresh_out_moves()
 
 
     def game_mode_announcement(self):
@@ -431,16 +419,16 @@ class Menu():
         self.menu_music_needs_playing = True
         while True:
             self.play_menu_music()
-            self.i=self.i+1
-            if not self.pair_one_move and self.no_playstation_controllers_attached_to_usb():
-                self.pair_one_move = True
-                self.paired_moves = []
-            if self.pair_one_move:
+            self.game_loop_iteration_counter= self.game_loop_iteration_counter + 1
+            if self.pairing_via_usb_currently and self.no_playstation_controllers_attached_to_usb():
+                self.pairing_via_usb_currently = False
+
+            if not self.pairing_via_usb_currently:
                 if psmove.count_connected() != len(self.tracked_moves):
                     for move_num, move in enumerate(self.moves):
-                        if move.connection_type == psmove.Conn_USB and self.pair_one_move:
+                        if move.connection_type == psmove.Conn_USB:
                             self.pair_usb_move(move)
-                        elif move.connection_type != psmove.Conn_USB:
+                        else:
                             self.pair_move(move, move_num)
                 self.check_for_new_moves()
                 if self.has_tracked_controllers():
@@ -567,7 +555,7 @@ class Menu():
         })
         try:
             #if anything fails during the settings file load, ignore file and stick with defaults
-            with open(common.SETTINGSFILE,'r') as yaml_file:
+            with open(common.SETTINGS_FILE,'r') as yaml_file:
                 file_settings = yaml.load(yaml_file)
 
             temp_colors = file_settings['color_lock_choices']
@@ -606,7 +594,7 @@ class Menu():
         self.ns.settings = temp_settings
     
     def update_settings_file(self):
-        with open(common.SETTINGSFILE,'w') as yaml_file:
+        with open(common.SETTINGS_FILE,'w') as yaml_file:
             yaml.dump(self.ns.settings,yaml_file)
         #option to make file editable by non-root
         #let's leave it as root only, people shouldn't
@@ -635,7 +623,7 @@ class Menu():
             'game_mode' : self.game_mode.pretty_name,
             'move_count' : self.move_count,
             'alive_count' : self.move_count - self.dead_count.value,
-            'ticker': self.i
+            'ticker': self.game_loop_iteration_counter
         }
 
         battery_status = {}
@@ -652,34 +640,26 @@ class Menu():
             proc.join()
             
     def check_start_game(self):
-        #if self.game_mode == common.Games.Random:
-            self.exclude_out_moves()
-            start_game = True
-            for serial in self.move_opts.keys():
-                #on means off here
-                if self.out_moves[serial] == Alive.on.value and self.move_opts[serial][Opts.random_start.value] == Alive.on.value:
-                    start_game = False
-                if self.move_opts[serial][Opts.random_start.value] == Alive.off.value and serial not in self.random_added:
-                    self.random_added.append(serial)
-                    if self.ns.settings['play_audio']:
-                        Audio('audio/Joust/sounds/start.wav').start_effect()
-            
-                    
-            if start_game:
-                if self.game_mode == common.Games.Random:
-                    self.start_game(random_mode=True)
-                else:
-                    self.start_game()
-                
+        self.refresh_out_moves()
+        start_game = True
+        for serial in self.move_opts.keys():
+            #on means off here
+            if self.out_moves[serial] == Alive.on.value and self.move_opts[serial][Opts.random_start.value] == Alive.on.value:
+                start_game = False
+            if self.move_opts[serial][Opts.random_start.value] == Alive.off.value and serial not in self.random_added:
+                self.random_added.append(serial)
+                if self.ns.settings['play_audio']:
+                    Audio('audio/Joust/sounds/start.wav').start_effect()
 
-        #else:
-        #    if self.ns.settings['move_can_be_admin']:
-        #        for move_opt in self.move_opts.values():
-        #            if move_opt[Opts.selection.value] == Selections.start_game.value:
-        #                self.start_game()
-            if self.command_from_web == 'startgame':
-                self.command_from_web = ''
+        if start_game:
+            if self.game_mode == common.Games.Random:
+                self.start_game(random_mode=True)
+            else:
                 self.start_game()
+
+        if self.command_from_web == 'startgame':
+            self.command_from_web = ''
+            self.start_game()
 
     def play_random_instructions(self):
         if self.game_mode == common.Games.JoustFFA:
@@ -706,7 +686,7 @@ class Menu():
 
     def start_game(self, random_mode=False):
         self.enable_bt_scanning(False)
-        self.exclude_out_moves()
+        self.refresh_out_moves()
         self.stop_tracking_moves()
         time.sleep(1)
         self.teams = {serial: self.move_opts[serial][Opts.team.value] for serial in self.tracked_moves.keys() if self.out_moves[serial] == Alive.on.value}
@@ -748,39 +728,39 @@ class Menu():
         if self.ns.settings['play_instructions'] and self.ns.settings['play_audio']:
             self.play_random_instructions()
 
-        self.game_modes={
+        self.games= {
             common.Games.Zombies: zombie.Zombie,
             common.Games.Commander: commander.Commander,
             common.Games.Ninja: speed_bomb.Bomb,
             common.Games.Swapper: swapper.Swapper,
             common.Games.FightClub: fight_club.Fight_club,
             common.Games.Tournament: tournament.Tournament,
-            common.Games.JoustFFA:  joust.Joust
+            #common.Games.JoustFFA: ffa.FreeForAll,
+
         }
 
-    # NWT: TODO Move music to inside game_mode
-
+        
         if self.game_mode == common.Games.Zombies:
-            self.game_modes[self.game_mode](game_moves, self.command_queue, self.ns, self.zombie_music)
+            self.games[self.game_mode](game_moves, self.command_queue, self.ns, self.zombie_music)
             self.tracked_moves = {}
         elif self.game_mode == common.Games.Commander:
-            self.game_modes[self.game_mode](game_moves, self.command_queue, self.ns, self.commander_music)
+            self.games[self.game_mode](game_moves, self.command_queue, self.ns, self.commander_music)
             self.tracked_moves = {}
         elif self.game_mode == common.Games.Ninja:
-            self.game_modes[self.game_mode](game_moves, self.command_queue, self.ns, self.commander_music)
+            self.games[self.game_mode](game_moves, self.command_queue, self.ns, self.commander_music)
             self.tracked_moves = {}
         elif self.game_mode == common.Games.Swapper:
-            self.game_modes[self.game_mode](game_moves, self.command_queue, self.ns, self.joust_music)
+            self.games[self.game_mode](game_moves, self.command_queue, self.ns, self.joust_music)
             self.tracked_moves = {}
         elif self.game_mode == common.Games.FightClub:
             if random.randint(0,1)==1:
                 fight_music = self.commander_music
             else:
                 fight_music = self.joust_music
-                self.game_modes[self.game_mode](game_moves, self.command_queue, self.ns, fight_music)
+            self.games[self.game_mode](game_moves, self.command_queue, self.ns, fight_music)
             self.tracked_moves = {}
         elif self.game_mode == common.Games.Tournament:
-            self.game_modes[self.game_mode](game_moves, self.command_queue, self.ns, self.joust_music)
+            self.games[self.game_mode](game_moves, self.command_queue, self.ns, self.joust_music)
             self.tracked_moves = {}
         else:
             if self.game_mode == common.Games.JoustFFA and self.experimental:
