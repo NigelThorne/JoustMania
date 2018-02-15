@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="be54d471-39b7-4e92-87e2-b854b0f6a3df" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/common.py" afterPath="$PROJECT_DIR$/common.py" />
       <change beforePath="$PROJECT_DIR$/piparty.py" afterPath="$PROJECT_DIR$/piparty.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -17,14 +16,24 @@
       <file leaf-file-name="piparty.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/piparty.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="660">
-              <caret line="265" column="26" lean-forward="false" selection-start-line="265" selection-start-column="13" selection-end-line="265" selection-end-column="26" />
+            <state relative-caret-position="931">
+              <caret line="792" column="0" lean-forward="false" selection-start-line="792" selection-start-column="0" selection-end-line="792" selection-end-column="0" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
-                <element signature="e#18500#18815#0" expanded="false" />
-                <element signature="e#18860#19172#0" expanded="false" />
-                <element signature="e#19218#23302#0" expanded="false" />
+                <element signature="e#18502#18817#0" expanded="false" />
+                <element signature="e#18862#19174#0" expanded="false" />
+                <element signature="e#19220#23304#0" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="tournament.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/games/tournament.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="391">
+              <caret line="155" column="19" lean-forward="true" selection-start-line="155" selection-start-column="19" selection-end-line="155" selection-end-column="19" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -98,8 +107,8 @@
       <file leaf-file-name="common.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/common.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-210">
-              <caret line="110" column="23" lean-forward="false" selection-start-line="110" selection-start-column="23" selection-end-line="110" selection-end-column="23" />
+            <state relative-caret-position="1140">
+              <caret line="74" column="51" lean-forward="false" selection-start-line="74" selection-start-column="51" selection-end-line="74" selection-end-column="51" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -125,6 +134,9 @@
       <find>command_from_web</find>
       <find>track_move</find>
       <find>force_color</find>
+      <find>tracked_moves</find>
+      <find>zombie</find>
+      <find>old_game_mode</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -140,6 +152,7 @@
         <option value="$PROJECT_DIR$/webui.py" />
         <option value="$PROJECT_DIR$/piaudio.py" />
         <option value="$PROJECT_DIR$/pair.py" />
+        <option value="$PROJECT_DIR$/common.py" />
         <option value="$PROJECT_DIR$/piparty.py" />
       </list>
     </option>
@@ -251,6 +264,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1936" height="2099" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
@@ -315,16 +329,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-210">
-          <caret line="110" column="23" lean-forward="false" selection-start-line="110" selection-start-column="23" selection-end-line="110" selection-end-column="23" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pair.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="840">
@@ -369,15 +373,33 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/games/tournament.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="155" column="19" lean-forward="true" selection-start-line="155" selection-start-column="19" selection-end-line="155" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1140">
+          <caret line="74" column="51" lean-forward="false" selection-start-line="74" selection-start-column="51" selection-end-line="74" selection-end-column="51" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/piparty.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="660">
-          <caret line="265" column="26" lean-forward="false" selection-start-line="265" selection-start-column="13" selection-end-line="265" selection-end-column="26" />
+        <state relative-caret-position="931">
+          <caret line="792" column="0" lean-forward="false" selection-start-line="792" selection-start-column="0" selection-end-line="792" selection-end-column="0" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
-            <element signature="e#18500#18815#0" expanded="false" />
-            <element signature="e#18860#19172#0" expanded="false" />
-            <element signature="e#19218#23302#0" expanded="false" />
+            <element signature="e#18502#18817#0" expanded="false" />
+            <element signature="e#18862#19174#0" expanded="false" />
+            <element signature="e#19220#23304#0" expanded="false" />
           </folding>
         </state>
       </provider>

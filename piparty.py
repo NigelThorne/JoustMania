@@ -271,6 +271,8 @@ class Menu():
         self.teams = {}
         self.game_mode = common.Games.Random
         self.old_game_mode = common.Games.Random
+
+
         self.pair = pair.Pair()
 
         self.i = 0
@@ -745,28 +747,40 @@ class Menu():
 
         if self.ns.settings['play_instructions'] and self.ns.settings['play_audio']:
             self.play_random_instructions()
-        
+
+        self.game_modes={
+            common.Games.Zombies: zombie.Zombie,
+            common.Games.Commander: commander.Commander,
+            common.Games.Ninja: speed_bomb.Bomb,
+            common.Games.Swapper: swapper.Swapper,
+            common.Games.FightClub: fight_club.Fight_club,
+            common.Games.Tournament: tournament.Tournament,
+            common.Games.JoustFFA:  joust.Joust
+        }
+
+    # NWT: TODO Move music to inside game_mode
+
         if self.game_mode == common.Games.Zombies:
-            zombie.Zombie(game_moves, self.command_queue, self.ns, self.zombie_music)
+            self.game_modes[self.game_mode](game_moves, self.command_queue, self.ns, self.zombie_music)
             self.tracked_moves = {}
         elif self.game_mode == common.Games.Commander:
-            commander.Commander(game_moves, self.command_queue, self.ns, self.commander_music)
+            self.game_modes[self.game_mode](game_moves, self.command_queue, self.ns, self.commander_music)
             self.tracked_moves = {}
         elif self.game_mode == common.Games.Ninja:
-            speed_bomb.Bomb(game_moves, self.command_queue, self.ns, self.commander_music)
+            self.game_modes[self.game_mode](game_moves, self.command_queue, self.ns, self.commander_music)
             self.tracked_moves = {}
         elif self.game_mode == common.Games.Swapper:
-            swapper.Swapper(game_moves, self.command_queue, self.ns, self.joust_music)
+            self.game_modes[self.game_mode](game_moves, self.command_queue, self.ns, self.joust_music)
             self.tracked_moves = {}
         elif self.game_mode == common.Games.FightClub:
             if random.randint(0,1)==1:
                 fight_music = self.commander_music
             else:
                 fight_music = self.joust_music
-            fight_club.Fight_club(game_moves, self.command_queue, self.ns, fight_music)
+                self.game_modes[self.game_mode](game_moves, self.command_queue, self.ns, fight_music)
             self.tracked_moves = {}
         elif self.game_mode == common.Games.Tournament:
-            tournament.Tournament(game_moves, self.command_queue, self.ns, self.joust_music)
+            self.game_modes[self.game_mode](game_moves, self.command_queue, self.ns, self.joust_music)
             self.tracked_moves = {}
         else:
             if self.game_mode == common.Games.JoustFFA and self.experimental:
@@ -776,6 +790,7 @@ class Menu():
                 game.run_loop()
             else:
                 #may need to put in moves that have selected to not be in the game
+                # NWT: TODO Make list of parameters consistent
                 joust.Joust(game_moves, self.command_queue, self.ns, self.joust_music, self.teams, self.game_mode)
             self.tracked_moves = {}
         if random_mode:
