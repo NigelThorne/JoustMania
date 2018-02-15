@@ -2,13 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="be54d471-39b7-4e92-87e2-b854b0f6a3df" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/games/commander.py" afterPath="$PROJECT_DIR$/games/commander.py" />
-      <change beforePath="$PROJECT_DIR$/games/ffa.py" afterPath="$PROJECT_DIR$/games/ffa.py" />
-      <change beforePath="$PROJECT_DIR$/games/fight_club.py" afterPath="$PROJECT_DIR$/games/fight_club.py" />
-      <change beforePath="$PROJECT_DIR$/games/speed_bomb.py" afterPath="$PROJECT_DIR$/games/speed_bomb.py" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/games/joustFFA.py" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/games/traitor.py" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/joust_old.py" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/games/swapper.py" afterPath="$PROJECT_DIR$/games/swapper.py" />
-      <change beforePath="$PROJECT_DIR$/games/tournament.py" afterPath="$PROJECT_DIR$/games/tournament.py" />
-      <change beforePath="$PROJECT_DIR$/games/zombie.py" afterPath="$PROJECT_DIR$/games/zombie.py" />
       <change beforePath="$PROJECT_DIR$/joust.py" afterPath="$PROJECT_DIR$/joust.py" />
       <change beforePath="$PROJECT_DIR$/piparty.py" afterPath="$PROJECT_DIR$/piparty.py" />
     </list>
@@ -24,14 +22,34 @@
       <content type="file-editors">
         <state>
           <leaf>
-            <file leaf-file-name="common.py" pinned="false" current-in-tab="true">
+            <file leaf-file-name="common.py" pinned="false" current-in-tab="false">
               <entry file="file://$PROJECT_DIR$/common.py">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="632">
-                    <caret line="47" column="23" lean-forward="true" selection-start-line="47" selection-start-column="23" selection-end-line="47" selection-end-column="23" />
+                  <state relative-caret-position="662">
+                    <caret line="48" column="38" lean-forward="false" selection-start-line="48" selection-start-column="20" selection-end-line="48" selection-end-column="38" />
                     <folding>
                       <element signature="e#0#14#0" expanded="true" />
                     </folding>
+                  </state>
+                </provider>
+              </entry>
+            </file>
+            <file leaf-file-name="traitor.py" pinned="false" current-in-tab="false">
+              <entry file="file://$PROJECT_DIR$/games/traitor.py">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state relative-caret-position="210">
+                    <caret line="7" column="13" lean-forward="true" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+                    <folding />
+                  </state>
+                </provider>
+              </entry>
+            </file>
+            <file leaf-file-name="joustFFA.py" pinned="false" current-in-tab="true">
+              <entry file="file://$PROJECT_DIR$/games/joustFFA.py">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state relative-caret-position="1026">
+                    <caret line="242" column="0" lean-forward="false" selection-start-line="242" selection-start-column="0" selection-end-line="242" selection-end-column="0" />
+                    <folding />
                   </state>
                 </provider>
               </entry>
@@ -46,24 +64,12 @@
       <file leaf-file-name="piparty.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/piparty.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="882">
-              <caret line="712" column="0" lean-forward="false" selection-start-line="712" selection-start-column="0" selection-end-line="712" selection-end-column="0" />
+            <state relative-caret-position="420">
+              <caret line="50" column="24" lean-forward="true" selection-start-line="50" selection-start-column="24" selection-end-line="50" selection-end-column="24" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
-                <element signature="e#1072#9092#0" expanded="false" />
-                <element signature="e#30988#32511#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ffa_test.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/games/ffa_test.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#14#0" expanded="true" />
+                <element signature="e#1091#9111#0" expanded="false" />
+                <element signature="e#31017#32540#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -92,18 +98,52 @@
       <file leaf-file-name="swapper.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/games/swapper.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1311">
-              <caret line="246" column="0" lean-forward="true" selection-start-line="246" selection-start-column="0" selection-end-line="246" selection-end-column="0" />
+            <state relative-caret-position="621">
+              <caret line="359" column="0" lean-forward="false" selection-start-line="359" selection-start-column="0" selection-end-line="375" selection-end-column="31" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ffa.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ffa.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/games/ffa.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1413">
-              <caret line="91" column="17" lean-forward="false" selection-start-line="91" selection-start-column="8" selection-end-line="91" selection-end-column="17" />
+            <state relative-caret-position="510">
+              <caret line="17" column="24" lean-forward="true" selection-start-line="17" selection-start-column="24" selection-end-line="17" selection-end-column="24" />
+              <folding>
+                <element signature="e#0#11#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="joust.sh" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/joust.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="zombie.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/games/zombie.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="706">
+              <caret line="203" column="77" lean-forward="false" selection-start-line="203" selection-start-column="68" selection-end-line="203" selection-end-column="77" />
+              <folding>
+                <element signature="e#1031#5296#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="joust.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/joust.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="605">
+              <caret line="609" column="41" lean-forward="false" selection-start-line="609" selection-start-column="36" selection-end-line="609" selection-end-column="41" />
               <folding />
             </state>
           </provider>
@@ -113,27 +153,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>len(self.tracked_moves) &gt; 0</find>
-      <find>admin_move</find>
-      <find>count_connected</find>
-      <find>update_settings_file</find>
-      <find>initialize_settings</find>
-      <find>pair_move</find>
-      <find>Process</find>
-      <find>command_queue</find>
-      <find>command_from_web</find>
-      <find>track_move</find>
-      <find>force_color</find>
-      <find>tracked_moves</find>
-      <find>zombie</find>
-      <find>old_game_mode</find>
-      <find>random_mode</find>
-      <find>self.game_mode</find>
-      <find>play_random</find>
-      <find>FFA</find>
-      <find>instructions</find>
-      <find>minimum_players</find>
-      <find>game_mode_announcement</find>
       <find>play_</find>
       <find>music</find>
       <find>zombie_music</find>
@@ -143,6 +162,27 @@
       <find>Start</find>
       <find>create_game</find>
       <find>run_loop</find>
+      <find>end_game_sound</find>
+      <find>num_teams</find>
+      <find>were</find>
+      <find>music_speed</find>
+      <find>dead_moves</find>
+      <find>'Pink'</find>
+      <find>Purple</find>
+      <find>team_colors</find>
+      <find>team</find>
+      <find>trait</find>
+      <find>common.Games.JoustFFA</find>
+      <find>self.game_mode</find>
+      <find>game_mode</find>
+      <find>Games.J</find>
+      <find>werewolf_audio_cue</find>
+      <find>GGa</find>
+      <find>Games.</find>
+      <find>werewolf_reveal</find>
+      <find>games.</find>
+      <find>FFA</find>
+      <find>Games</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -158,15 +198,18 @@
         <option value="$PROJECT_DIR$/pair.py" />
         <option value="$PROJECT_DIR$/piaudio.py" />
         <option value="$PROJECT_DIR$/common.py" />
-        <option value="$PROJECT_DIR$/joust.py" />
         <option value="$PROJECT_DIR$/games/zombie.py" />
         <option value="$PROJECT_DIR$/games/commander.py" />
-        <option value="$PROJECT_DIR$/games/swapper.py" />
         <option value="$PROJECT_DIR$/games/fight_club.py" />
         <option value="$PROJECT_DIR$/games/tournament.py" />
         <option value="$PROJECT_DIR$/games/speed_bomb.py" />
         <option value="$PROJECT_DIR$/games/ffa.py" />
+        <option value="$PROJECT_DIR$/games/swapper.py" />
+        <option value="$PROJECT_DIR$/games/traitor.py" />
+        <option value="$PROJECT_DIR$/joust_old.py" />
+        <option value="$PROJECT_DIR$/games/joustFFA.py" />
         <option value="$PROJECT_DIR$/piparty.py" />
+        <option value="$PROJECT_DIR$/joust.py" />
       </list>
     </option>
   </component>
@@ -212,6 +255,26 @@
               <item name="nwt_JoustMania" type="b2602c69:ProjectViewProjectNode" />
               <item name="nwt_JoustMania" type="462c0819:PsiDirectoryNode" />
               <item name="audio" type="462c0819:PsiDirectoryNode" />
+              <item name="Joust" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="nwt_JoustMania" type="b2602c69:ProjectViewProjectNode" />
+              <item name="nwt_JoustMania" type="462c0819:PsiDirectoryNode" />
+              <item name="audio" type="462c0819:PsiDirectoryNode" />
+              <item name="Joust" type="462c0819:PsiDirectoryNode" />
+              <item name="music" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="nwt_JoustMania" type="b2602c69:ProjectViewProjectNode" />
+              <item name="nwt_JoustMania" type="462c0819:PsiDirectoryNode" />
+              <item name="audio" type="462c0819:PsiDirectoryNode" />
+              <item name="Joust" type="462c0819:PsiDirectoryNode" />
+              <item name="sounds" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="nwt_JoustMania" type="b2602c69:ProjectViewProjectNode" />
+              <item name="nwt_JoustMania" type="462c0819:PsiDirectoryNode" />
+              <item name="audio" type="462c0819:PsiDirectoryNode" />
               <item name="Menu" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -230,6 +293,12 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\code\nwt_JoustMania\games" />
+      <recent name="F:\code\nwt_JoustMania" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -325,8 +394,8 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
-            <element signature="e#1072#9092#0" expanded="false" />
-            <element signature="e#30988#32511#0" expanded="false" />
+            <element signature="e#1091#9111#0" expanded="false" />
+            <element signature="e#31017#32540#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -471,22 +540,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/joust.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="681">
-          <caret line="279" column="27" lean-forward="true" selection-start-line="279" selection-start-column="26" selection-end-line="279" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/games/zombie.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1521">
-          <caret line="238" column="0" lean-forward="true" selection-start-line="238" selection-start-column="0" selection-end-line="238" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/games/commander.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1431">
@@ -503,34 +556,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="632">
-          <caret line="47" column="23" lean-forward="true" selection-start-line="47" selection-start-column="23" selection-end-line="47" selection-end-column="23" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/piparty.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="882">
-          <caret line="712" column="0" lean-forward="false" selection-start-line="712" selection-start-column="0" selection-end-line="712" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-            <element signature="e#1072#9092#0" expanded="false" />
-            <element signature="e#30988#32511#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/games/ffa_test.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#14#0" expanded="true" />
+            <element signature="e#0#14#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -551,18 +582,100 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/games/swapper.py">
+    <entry file="file://$PROJECT_DIR$/games/ffa.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1311">
-          <caret line="246" column="0" lean-forward="true" selection-start-line="246" selection-start-column="0" selection-end-line="246" selection-end-column="0" />
+        <state relative-caret-position="510">
+          <caret line="17" column="24" lean-forward="true" selection-start-line="17" selection-start-column="24" selection-end-line="17" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/colors.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1295">
+          <caret line="82" column="0" lean-forward="false" selection-start-line="82" selection-start-column="0" selection-end-line="82" selection-end-column="15" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/games/ffa.py">
+    <entry file="file://$PROJECT_DIR$/games/swapper.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1413">
-          <caret line="91" column="17" lean-forward="false" selection-start-line="91" selection-start-column="8" selection-end-line="91" selection-end-column="17" />
+        <state relative-caret-position="621">
+          <caret line="359" column="0" lean-forward="false" selection-start-line="359" selection-start-column="0" selection-end-line="375" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/games/zombie.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="706">
+          <caret line="203" column="77" lean-forward="false" selection-start-line="203" selection-start-column="68" selection-end-line="203" selection-end-column="77" />
+          <folding>
+            <element signature="e#1031#5296#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/joust.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/joust_old.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="51" column="0" lean-forward="false" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/games/traitor.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="7" column="13" lean-forward="true" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="662">
+          <caret line="48" column="38" lean-forward="false" selection-start-line="48" selection-start-column="20" selection-end-line="48" selection-end-column="38" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/games/joustFFA.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1026">
+          <caret line="242" column="0" lean-forward="false" selection-start-line="242" selection-start-column="0" selection-end-line="242" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/piparty.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="50" column="24" lean-forward="true" selection-start-line="50" selection-start-column="24" selection-end-line="50" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+            <element signature="e#1091#9111#0" expanded="false" />
+            <element signature="e#31017#32540#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/joust.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="605">
+          <caret line="609" column="41" lean-forward="false" selection-start-line="609" selection-start-column="36" selection-end-line="609" selection-end-column="41" />
           <folding />
         </state>
       </provider>

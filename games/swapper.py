@@ -358,21 +358,21 @@ class Swapper():
     def end_game_sound(self, winning_team):
         win_team_name = self.team_colors[winning_team].name
         if win_team_name == 'Pink':
-            team_win = Audio('audio/Joust/sounds/human win.wav')
-        if win_team_name == 'Magenta':
+            team_win = Audio('audio/Joust/sounds/pink team win.wav')
+        elif win_team_name == 'Magenta':
             team_win = Audio('audio/Joust/sounds/magenta team win.wav')
-        if win_team_name == 'Orange':
-            team_win = Audio('audio/Joust/sounds/human win.wav')
-        if win_team_name == 'Yellow':
+        elif win_team_name == 'Orange':
+            team_win = Audio('audio/Joust/sounds/orange team win.wav')
+        elif win_team_name == 'Yellow':
             team_win = Audio('audio/Joust/sounds/yellow team win.wav')
-        if win_team_name == 'Green':
+        elif win_team_name == 'Green':
             team_win = Audio('audio/Joust/sounds/green team win.wav')
-        if win_team_name == 'Turquoise':
+        elif win_team_name == 'Turquoise':
             team_win = Audio('audio/Joust/sounds/cyan team win.wav')
-        if win_team_name == 'Blue':
+        elif win_team_name == 'Blue':
             team_win = Audio('audio/Joust/sounds/blue team win.wav')
-        if win_team_name == 'Purple':
-            team_win = Audio('audio/Joust/sounds/human win.wav')
+        else: #if win_team_name == 'Purple':
+            team_win = Audio('audio/Joust/sounds/purple team win.wav')
         team_win.start_effect()
 
     def game_loop(self):

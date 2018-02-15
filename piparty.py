@@ -14,7 +14,7 @@ import common
 import joust
 import pair
 import webui
-from games import ffa, zombie, commander, swapper, tournament, speed_bomb, fight_club
+from games import ffa, zombie, commander, swapper, tournament, speed_bomb, fight_club, traitor, joustFFA
 from piaudio import Music, DummyMusic, Audio, InitAudio, DJ
 
 TEAM_NUM = len(colors.team_color_list)
@@ -236,10 +236,10 @@ class GameFactory():
         self.command_queue = command_queue
         # Ideally the games would register themselves with the GameFactory...
         self.games= {
-            common.Games.JoustFFA: joust.Joust,
+            common.Games.JoustFFA: joustFFA.JoustFFA,
             common.Games.JoustTeams: joust.Joust,
             common.Games.JoustRandomTeams: joust.Joust,
-            common.Games.Traitor: joust.Joust,
+            common.Games.Traitor: traitor.Traitor,
             common.Games.WereJoust: joust.Joust,
             common.Games.Zombies: zombie.Zombie,
             common.Games.Commander: commander.Commander,
