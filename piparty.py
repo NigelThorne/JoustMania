@@ -260,7 +260,7 @@ class Menu():
 
         self.out_moves = {} #move controllers that have been taken out of play
         self.random_added = []
-        self.rand_game_list = []
+        self.rand_games_recently_played_list = []
 
         self.show_battery = Value('i', 0)
         
@@ -273,8 +273,6 @@ class Menu():
         self.move_opts = {}
         self.teams = {}
         self.game_mode = common.Games.Random
-        self.old_game_mode = common.Games.Random
-
 
         self.pair = pair.Pair()
 
@@ -656,45 +654,26 @@ class Menu():
             self.start_game()
 
     def start_game(self, random_mode=False):
-        self.enable_bt_scanning(False)
+        self.pair.enable_bt_scanning(False)
         self.refresh_out_moves()
         self.stop_tracking_moves()
         time.sleep(1)
         self.teams = {serial: self.move_opts[serial][Opts.team.value] for serial in self.tracked_moves.keys() if self.out_moves[serial] == Alive.on.value}
         game_moves = [move.get_serial() for move in self.moves if self.out_moves[move.get_serial()] == Alive.on.value]
+        game_moves_count = len(game_moves)
         try:
             self.menu_music.stop_audio()
         except:
             pass
 
-        if len(game_moves) < self.game_mode.minimum_players and self.ns.settings['enforce_minimum']:
+        if game_moves_count < self.game_mode.minimum_players and self.ns.settings['enforce_minimum']:
             Audio('audio/Menu/notenoughplayers.wav').start_effect()
             self.tracked_moves = {}
             return
         self.update_status('starting')
 
         if random_mode:
-            good_random_modes = [game for game in common.Games if game.name in self.ns.settings['random_modes']]
-            good_random_modes = [common.Games[game] for game in self.ns.settings['random_modes']]
-            if self.ns.settings['enforce_minimum']:
-                good_random_modes = [game for game in good_random_modes if game.minimum_players <= len(game_moves)]
-            if len(good_random_modes) == 0:
-                selected_game = common.Games.JoustFFA  #force Joust FFA
-            elif len(good_random_modes) == 1:
-                selected_game = good_random_modes[0]
-            else:
-                if len(self.rand_game_list) >= len(good_random_modes):
-                    #empty rand game list, append old game, to not play it twice
-                    self.rand_game_list = [self.old_game_mode]
-
-                selected_game = random.choice(good_random_modes)
-                while selected_game in self.rand_game_list:
-                    selected_game = random.choice(good_random_modes)
-
-                self.old_game_mode = selected_game
-                self.rand_game_list.append(selected_game)
-
-            self.game_mode = selected_game
+            self.game_mode = self.select_random_game_mode(game_moves_count)
 
         if self.ns.settings['play_instructions'] and self.ns.settings['play_audio']:
             self.dj.read_instructions(self.game_mode.instructions)
@@ -741,7 +720,40 @@ class Menu():
         #turn off admin mode so someone can't accidentally press a button    
         self.admin_move = None
         self.random_added = []
-            
+
+    def select_random_game_mode(self, number_of_players):
+        """
+        Select a new game randomly from the list in the settings. "random_modes"
+        Ignore moves without enough players if `enforce_minimum` is set
+        Play Joust FFA if no modes have enough players
+        Avoid playing the same game twice in a row if there are other options
+        Try to play all random games before starting again.
+            (uses self.rand_games_recently_played_list to hold random games recently played.)
+        """
+
+        good_random_modes = [common.Games[game] for game in self.ns.settings['random_modes']]
+
+        if self.ns.settings['enforce_minimum']:
+            good_random_modes = [game for game in good_random_modes if game.minimum_players <= number_of_players]
+
+        if len(good_random_modes) == 0:
+            return common.Games.JoustFFA  # force Joust FFA
+
+        if len(good_random_modes) == 1:
+            return good_random_modes[0]
+
+        self.rand_games_recently_played_list.append(self.game_mode)
+        unplayed_random_modes = [game for game in good_random_modes if game not in self.rand_games_recently_played_list]
+
+        if len(unplayed_random_modes) == 0:
+            # empty rand game list, append old game, to not play it twice
+            self.rand_games_recently_played_list = [self.game_mode]
+            unplayed_random_modes = [game for game in good_random_modes if game not in self.rand_games_recently_played_list]
+
+        # At this point there will always be at least one game unplayed.
+        return random.choice(unplayed_random_modes)
+
+
 if __name__ == "__main__":
     InitAudio()
     piparty = Menu()
