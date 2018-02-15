@@ -14,7 +14,7 @@ import common
 import joust
 import pair
 import webui
-from games import ffa, zombie, commander, swapper, tournament, speed_bomb, fight_club, traitor, joustFFA
+from games import ffa, zombie, commander, swapper, tournament, speed_bomb, fight_club, traitor, joustFFA, were_joust
 from piaudio import Music, DummyMusic, Audio, InitAudio, DJ
 
 TEAM_NUM = len(colors.team_color_list)
@@ -240,7 +240,7 @@ class GameFactory():
             common.Games.JoustTeams: joust.Joust,
             common.Games.JoustRandomTeams: joust.Joust,
             common.Games.Traitor: traitor.Traitor,
-            common.Games.WereJoust: joust.Joust,
+            common.Games.WereJoust: were_joust.WereJoust,
             common.Games.Zombies: zombie.Zombie,
             common.Games.Commander: commander.Commander,
             common.Games.Swapper: swapper.Swapper,

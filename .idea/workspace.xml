@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="be54d471-39b7-4e92-87e2-b854b0f6a3df" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/games/joustFFA.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/games/traitor.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/joust_old.py" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/games/swapper.py" afterPath="$PROJECT_DIR$/games/swapper.py" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/games/were_joust.py" />
       <change beforePath="$PROJECT_DIR$/joust.py" afterPath="$PROJECT_DIR$/joust.py" />
       <change beforePath="$PROJECT_DIR$/piparty.py" afterPath="$PROJECT_DIR$/piparty.py" />
     </list>
@@ -22,11 +18,11 @@
       <content type="file-editors">
         <state>
           <leaf>
-            <file leaf-file-name="common.py" pinned="false" current-in-tab="false">
+            <file leaf-file-name="common.py" pinned="false" current-in-tab="true">
               <entry file="file://$PROJECT_DIR$/common.py">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="662">
-                    <caret line="48" column="38" lean-forward="false" selection-start-line="48" selection-start-column="20" selection-end-line="48" selection-end-column="38" />
+                  <state relative-caret-position="782">
+                    <caret line="52" column="13" lean-forward="false" selection-start-line="52" selection-start-column="4" selection-end-line="52" selection-end-column="13" />
                     <folding>
                       <element signature="e#0#14#0" expanded="true" />
                     </folding>
@@ -44,7 +40,7 @@
                 </provider>
               </entry>
             </file>
-            <file leaf-file-name="joustFFA.py" pinned="false" current-in-tab="true">
+            <file leaf-file-name="joustFFA.py" pinned="false" current-in-tab="false">
               <entry file="file://$PROJECT_DIR$/games/joustFFA.py">
                 <provider selected="true" editor-type-id="text-editor">
                   <state relative-caret-position="1026">
@@ -61,89 +57,35 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="450">
-      <file leaf-file-name="piparty.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="piparty.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/piparty.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
-              <caret line="50" column="24" lean-forward="true" selection-start-line="50" selection-start-column="24" selection-end-line="50" selection-end-column="24" />
+            <state relative-caret-position="840">
+              <caret line="55" column="0" lean-forward="true" selection-start-line="55" selection-start-column="0" selection-end-line="56" selection-end-column="26" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
-                <element signature="e#1091#9111#0" expanded="false" />
-                <element signature="e#31017#32540#0" expanded="false" />
+                <element signature="e#1103#9123#0" expanded="false" />
+                <element signature="e#31038#32561#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="fight_club.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/games/fight_club.py">
+      <file leaf-file-name="joust.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/joust.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1611">
-              <caret line="252" column="0" lean-forward="true" selection-start-line="252" selection-start-column="0" selection-end-line="252" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="speed_bomb.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/games/speed_bomb.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1111">
-              <caret line="240" column="0" lean-forward="true" selection-start-line="240" selection-start-column="0" selection-end-line="240" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="swapper.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/games/swapper.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="621">
-              <caret line="359" column="0" lean-forward="false" selection-start-line="359" selection-start-column="0" selection-end-line="375" selection-end-column="31" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ffa.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/games/ffa.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="510">
-              <caret line="17" column="24" lean-forward="true" selection-start-line="17" selection-start-column="24" selection-end-line="17" selection-end-column="24" />
-              <folding>
-                <element signature="e#0#11#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="joust.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/joust.sh">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
+            <state relative-caret-position="-1530">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="zombie.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/games/zombie.py">
+      <file leaf-file-name="were_joust.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/games/were_joust.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="706">
-              <caret line="203" column="77" lean-forward="false" selection-start-line="203" selection-start-column="68" selection-end-line="203" selection-end-column="77" />
-              <folding>
-                <element signature="e#1031#5296#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="joust.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/joust.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="605">
-              <caret line="609" column="41" lean-forward="false" selection-start-line="609" selection-start-column="36" selection-end-line="609" selection-end-column="41" />
+            <state relative-caret-position="753">
+              <caret line="153" column="0" lean-forward="true" selection-start-line="153" selection-start-column="0" selection-end-line="153" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -153,7 +95,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>play_</find>
       <find>music</find>
       <find>zombie_music</find>
       <find>enable_bt_scanning</find>
@@ -177,15 +118,17 @@
       <find>game_mode</find>
       <find>Games.J</find>
       <find>werewolf_audio_cue</find>
-      <find>GGa</find>
-      <find>Games.</find>
       <find>werewolf_reveal</find>
       <find>games.</find>
       <find>FFA</find>
       <find>Games</find>
+      <find>GGa</find>
+      <find>Games.</find>
+      <find>WereJoust</find>
     </findStrings>
     <replaceStrings>
       <replace />
+      <replace>common.Games.WereJoust</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -208,8 +151,9 @@
         <option value="$PROJECT_DIR$/games/traitor.py" />
         <option value="$PROJECT_DIR$/joust_old.py" />
         <option value="$PROJECT_DIR$/games/joustFFA.py" />
-        <option value="$PROJECT_DIR$/piparty.py" />
         <option value="$PROJECT_DIR$/joust.py" />
+        <option value="$PROJECT_DIR$/games/were_joust.py" />
+        <option value="$PROJECT_DIR$/piparty.py" />
       </list>
     </option>
   </component>
@@ -394,8 +338,8 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
-            <element signature="e#1091#9111#0" expanded="false" />
-            <element signature="e#31017#32540#0" expanded="false" />
+            <element signature="e#1103#9123#0" expanded="false" />
+            <element signature="e#31038#32561#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -574,24 +518,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/games/speed_bomb.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1111">
-          <caret line="240" column="0" lean-forward="true" selection-start-line="240" selection-start-column="0" selection-end-line="240" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/games/ffa.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="17" column="24" lean-forward="true" selection-start-line="17" selection-start-column="24" selection-end-line="17" selection-end-column="24" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/colors.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1295">
@@ -604,24 +530,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="621">
           <caret line="359" column="0" lean-forward="false" selection-start-line="359" selection-start-column="0" selection-end-line="375" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/games/zombie.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="706">
-          <caret line="203" column="77" lean-forward="false" selection-start-line="203" selection-start-column="68" selection-end-line="203" selection-end-column="77" />
-          <folding>
-            <element signature="e#1031#5296#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/joust.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -642,16 +550,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="662">
-          <caret line="48" column="38" lean-forward="false" selection-start-line="48" selection-start-column="20" selection-end-line="48" selection-end-column="38" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/games/joustFFA.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1026">
@@ -660,23 +558,77 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/piparty.py">
+    <entry file="file://$PROJECT_DIR$/games/speed_bomb.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="50" column="24" lean-forward="true" selection-start-line="50" selection-start-column="24" selection-end-line="50" selection-end-column="24" />
+        <state relative-caret-position="1111">
+          <caret line="240" column="0" lean-forward="true" selection-start-line="240" selection-start-column="0" selection-end-line="240" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/games/ffa.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
-            <element signature="e#1091#9111#0" expanded="false" />
-            <element signature="e#31017#32540#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/joust.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/games/zombie.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="706">
+          <caret line="203" column="77" lean-forward="false" selection-start-line="203" selection-start-column="68" selection-end-line="203" selection-end-column="77" />
+          <folding>
+            <element signature="e#1031#5296#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="782">
+          <caret line="52" column="13" lean-forward="false" selection-start-line="52" selection-start-column="4" selection-end-line="52" selection-end-column="13" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/games/were_joust.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="753">
+          <caret line="153" column="0" lean-forward="true" selection-start-line="153" selection-start-column="0" selection-end-line="153" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/joust.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="605">
-          <caret line="609" column="41" lean-forward="false" selection-start-line="609" selection-start-column="36" selection-end-line="609" selection-end-column="41" />
+        <state relative-caret-position="-1530">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/piparty.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="840">
+          <caret line="55" column="0" lean-forward="true" selection-start-line="55" selection-start-column="0" selection-end-line="56" selection-end-column="26" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+            <element signature="e#1103#9123#0" expanded="false" />
+            <element signature="e#31038#32561#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
