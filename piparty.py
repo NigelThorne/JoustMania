@@ -289,8 +289,7 @@ class Menu():
 
         self.show_battery = Value('i', 0)
         
-
-        self.pairing_via_usb_currently = False #only allow one move to be paired at a time
+        self.pairing_currently = False #only allow one move to be paired at a time
         self.tracked_moves = {}
         self.force_color = {} #used to force the color change of a move
 
@@ -321,16 +320,16 @@ class Menu():
             self.move_count = len(self.moves)
 
     def pair_usb_move(self, move):
-        if not self.pairing_via_usb_currently:
+        if not self.pairing_currently:
             move_serial = move.get_serial()
             if move.connection_type == psmove.Conn_USB:
-                self.pairing_via_usb_currently = True
                 if move_serial not in self.tracked_moves:
-                    self.pair.pair_move(move)
+                    self.pair.pair_move_by_usb(move)
                     move.set_leds(255,255,255)
                     move.update_leds()
 
     def pair_move(self, move, move_num):
+        """start a process to monitor the move controller and update it."""
         move_serial = move.get_serial()
         if move_serial not in self.tracked_moves:
             color = Array('i', [0] * 3)
@@ -339,18 +338,18 @@ class Menu():
                 opts[Opts.team.value] = self.teams[move_serial]
             else:
                 #initialize to team Yellow
-                opts[Opts.team.value] = 3 
+                opts[Opts.team.value] = 3
             if move_serial in self.out_moves:
                 opts[Opts.alive.value] = self.out_moves[move_serial]
             opts[Opts.game_mode.value] = self.game_mode.value
-            
+
             #now start tracking the move controller
             proc = Process(target=track_move, args=(move_serial, move_num, opts, color, self.show_battery, self.dead_count))
             self.move_opts[move_serial] = opts
             self.force_color[move_serial] = color
-            self.tracked_moves[move_serial] = proc
             proc.start()
-            self.refresh_out_moves()
+            self.tracked_moves[move_serial] = proc
+        self.refresh_out_moves()
 
     def game_mode_announcement(self):
         if self.game_mode == common.Games.JoustFFA:
@@ -427,21 +426,22 @@ class Menu():
             self.play_menu_music()
             self.game_loop_iteration_counter= self.game_loop_iteration_counter + 1
 
-            if self.pairing_via_usb_currently and self.no_playstation_controllers_attached_to_usb():
-                self.pairing_via_usb_currently = False
+            if self.pairing_currently and self.no_playstation_controllers_attached_to_usb():
+                self.pairing_currently = False
 
-            if self.has_untracked_controllers():
-                for move_num, move in enumerate(self.moves):
-                    if move.connection_type == psmove.Conn_USB:
-                        self.pair_usb_move(move)  #may be ignored if already pairing
-                    else:
-                        self.pair_move(move, move_num)
-            self.check_for_new_moves()
-            if self.has_tracked_controllers():
-                self.check_change_mode()
-                self.check_admin_controls()
-                self.check_start_game()
-            self.check_command_queue()
+            if not self.pairing_currently:
+                if self.has_untracked_controllers():
+                    for move_num, move in enumerate(self.moves):
+                        if move.connection_type == psmove.Conn_USB:
+                            self.pair_usb_move(move)
+                        else:
+                            self.pair_move(move, move_num)
+                self.check_for_new_moves()
+                if self.has_tracked_controllers():
+                    self.check_change_mode()
+                    self.check_admin_controls()
+                    self.check_start_game()
+                self.check_command_queue()
             self.update_status('menu')
 
     def has_tracked_controllers(self):

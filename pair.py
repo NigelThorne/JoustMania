@@ -15,9 +15,9 @@ class Pair():
         for device in devices:
             self.bt_devices[device] = []
 
-        self.pre_existing_devices()
+        self.refresh_addressed_per_device()
 
-    def pre_existing_devices(self):
+    def refresh_addressed_per_device(self):
         """
         Enumerate known devices
 
@@ -37,7 +37,7 @@ class Pair():
             if addr not in self.bt_devices.keys():
                 self.bt_devices[addr] = []
 
-        self.pre_existing_devices()
+        self.refresh_addressed_per_device()
 
     def check_if_not_paired(self, addr):
         """
@@ -50,20 +50,19 @@ class Pair():
 
     def get_lowest_bt_device(self):
         num = 9999999
+        best_dev = ""
         print(self.bt_devices)
         for dev in self.bt_devices.keys():
-            if len(self.bt_devices[dev]) < num:
-                num = len(self.bt_devices[dev])
+            new_num = len(self.bt_devices[dev])
+            if new_num < num:
+                num = new_num
+                best_dev = dev
+        return best_dev
 
-        for dev in self.bt_devices.keys():
-            if len(self.bt_devices[dev]) == num:
-                return dev
-        return ''
-
-    def pair_move(self, move):
+    def pair_move_by_usb(self, move):
         if move and move.get_serial():
             if move.connection_type == psmove.Conn_USB:
-                self.pre_existing_devices()
+                self.refresh_addressed_per_device()
                 if self.check_if_not_paired(move.get_serial().upper()):
                     move.pair_custom(self.get_lowest_bt_device())
 
