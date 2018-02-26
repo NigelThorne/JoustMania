@@ -172,7 +172,7 @@ class WebUI():
 
         self.ns.settings = temp_settings
 
-        with open(common.SETTINGSFILE,'w') as yaml_file:
+        with open(common.SETTINGS_FILE,'w') as yaml_file:
             yaml.dump(self.ns.settings,yaml_file)
 
         if colors_are_good:
